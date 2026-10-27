@@ -11,11 +11,6 @@ basal activity is the **weighted mean bin** of its barcode across those bins, re
 
 **Correspondence:** Matthew K. Howard, <matthewkarlhoward@gmail.com>
 
-**This repository is scoped to Figure 1 and Supplemental Figure 1.** It contains the
-pipeline, the scoring, the annotation tables those two figures read, and the scripts that
-drew them — and nothing else. The exploratory analyses around the screen, and the deep
-mutational scan of GPR161 that follows from it, are not here.
-
 ```
 pipeline/     FASTQ -> per-barcode counts (fastp, cutadapt, count_barcodes.py)
 scripts/      five table builders, three figure scripts, one style module
