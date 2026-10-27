@@ -1,0 +1,9 @@
+# Analysis was run on Python 3.9 with the versions below.
+pandas==2.2.1
+numpy==1.26.4
+scipy==1.11.4
+matplotlib==3.8.4
+openpyxl==3.1.2
+biopython==1.83
+# pipeline only (FASTQ -> counts); fastp is a separate binary
+cutadapt==4.6

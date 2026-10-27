@@ -1,0 +1,7 @@
+Source: https://files.gpcrdb.org/GPCR-G_protein_couplings.xlsx
+Linked from: https://gproteindb.org/signprot/couplings
+Downloaded: 2026-10-20
+GproteinDb / GPCRdb bulk G-protein coupling table.
+Sheet used: GtoPdb (IUPHAR/Guide to Pharmacology curation). The Bouvier-GEMTA,
+Inoue-TGFa and Inoue-NanoBiT-G sheets are present in the workbook but are not read by
+build_coupling.py.

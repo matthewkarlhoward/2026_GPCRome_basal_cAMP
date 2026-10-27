@@ -1,0 +1,41 @@
+symbol,ca_evidence,ca_mechanism,ca_caveat,ca_source
+GPR6,established,GPR3/6/12 family; ligand-independent cAMP comparable to a fully activated GPCR,,PMC4575141; PMC8065388
+GPR12,established,GPR3/6/12 family; constitutive Gs (dual Gs/Gi reported),,PMC4575141; PMC5849771
+GPR3,established,GPR3/6/12 family; maintains oocyte meiotic arrest via cAMP,chronic ubiquitous ligand not excluded,PMC10631289; PMC4575141
+GPR52,established,ECL2 acts as a built-in tethered agonist occupying the orthosteric pocket,,cryo-EM 6LI0 (Nature 2020)
+GPR21,established,agonist-like motif in ECL2 occupies the orthosteric pocket; basal activity comparable to GPR52,,Nat Commun 2023 s41467-023-35882-w
+GPR61,established,cryo-EM with Gs and no exogenous ligand; grouped with GPR161/GPR174 as raising cAMP like activated D1R,,PMC5566548
+GPR62,established,ligand-independent cAMP; lacks the conserved DRY and BBXXB motifs,Gs vs Gi direction disputed in some reports,PMC5566548
+GPR161,established,constitutive Gs; elevates cAMP to repress Gli in Hedgehog signalling,,PMC5566548 (grouped with GPR61)
+GPR101,established,constitutive Gs; duplication causes X-linked acrogigantism,also couples Gq/11 and G12/13,cryo-EM 8W8R
+ADGRG5,established,Stachel tethered agonist; one splice variant ~25-fold basal cAMP over empty vector,activity depends on splice variant and self-cleavage,JCI Insight; Nature 2022 s41586-022-04619-y
+GPR4,established,highly constitutively active at neutral pH when overexpressed in HEK293,proton sensor; activity is pH-dependent by design,PMC6063991
+GPR26,weak,2015 orphan class-A screen; no clear cAMP elevation shown,Gs claim rests largely on vendor annotation,PMC4575141
+HTR6,established,high constitutive activity; inverse agonists well characterized,,textbook aminergic constitutive activity
+HTR4,established,constitutive activity well documented,,textbook aminergic constitutive activity
+HTR7,established,constitutive activity documented,,textbook aminergic constitutive activity
+HRH2,established,constitutive activity well documented,,textbook aminergic constitutive activity
+ADRB2,established,classic inverse-agonist system,,textbook aminergic constitutive activity
+ADRB1,established,constitutive activity documented,,textbook aminergic constitutive activity
+ADRB3,reported,constitutive activity reported,,textbook aminergic constitutive activity
+MC1R,established,constitutive activity well documented; LOF variants give red hair/fair skin,,melanocortin literature
+MC5R,reported,constitutive activity reported,,melanocortin literature
+DRD5,established,higher constitutive activity than D1; matches DRD5 > DRD1 in this screen,,dopamine receptor literature
+DRD1,reported,lower constitutive activity than D5,,dopamine receptor literature
+HTR2A,established,constitutive activity well documented; pimavanserin is an inverse agonist,Gq-coupled - should not drive a Gs/cAMP reporter directly,serotonin receptor literature
+PTH1R,established,activating mutations cause Jansen metaphyseal chondrodysplasia,class B; basal cAMP rises with expression level,class B GPCR literature
+GIPR,reported,ligand-independent cAMP reported,class B; basal cAMP rises with expression level,class B GPCR literature
+GLP1R,reported,constitutive activity reported,class B; basal cAMP rises with expression level,class B GPCR literature
+VIPR2,not assessed,,class B; basal cAMP rises with expression level,
+PTH2R,not assessed,,class B; basal cAMP rises with expression level,
+SCTR,not assessed,,class B; basal cAMP rises with expression level,
+GHRHR,not assessed,,class B; basal cAMP rises with expression level,
+ADORA2A,established,constitutive activity documented,HEK293 release adenosine - autocrine activation not excluded,adenosine receptor literature
+ADORA2B,reported,constitutive activity reported,HEK293 release adenosine - autocrine activation not excluded,adenosine receptor literature
+PTGER2,not assessed,,HEK293 make prostaglandins (COX); autocrine PGE2 not excluded,
+PTGER4,not assessed,,HEK293 make prostaglandins (COX); autocrine PGE2 not excluded,
+PTGDR,not assessed,,HEK293 make prostaglandins (COX); autocrine PGD2 not excluded,
+GPR119,reported,constitutive activity reported; lipid (OEA) sensor,endogenous lipid ligand not excluded,lipid receptor literature
+GPBAR1,not assessed,,bile acids in serum not excluded,
+P2RY1,not assessed,,Gq-coupled; cells release ATP - autocrine activation not excluded,
+GPR15,none found,,annotated Gi - a Gi receptor should lower not raise cAMP; unexpected hit,

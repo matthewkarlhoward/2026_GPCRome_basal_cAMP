@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.DS_Store
+.ipynb_checkpoints/
+# raw and intermediate sequencing data are not tracked
+*.fastq
+*.fastq.gz
+pipeline/data/
+pipeline/merged/
+pipeline/trimmed/
+pipeline/logs/
