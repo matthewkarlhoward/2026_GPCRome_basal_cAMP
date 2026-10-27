@@ -12,6 +12,8 @@ authors:
     given-names: Matthew K.
     email: matthewkarlhoward@gmail.com
 repository-code: "https://github.com/matthewkarlhoward/2026_GPCRome_basal_cAMP"
+version: "1.0.0"
+date-released: "2026-10-27"
 license: MIT
 keywords:
   - GPCR
