@@ -1,5 +1,7 @@
 # GPCRome basal cAMP screen
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23682602.svg)](https://doi.org/10.5281/zenodo.23682602)
+
 Code, processed data and figures for the basal cAMP GPCRome screen in **Howard et al.
 2026** — a pooled measurement of **ligand-independent (basal) Gs/cAMP signalling across
 946 barcoded human GPCR constructs**.
@@ -84,13 +86,20 @@ release.
 
 Tagged releases are archived on [Zenodo](https://zenodo.org) through its GitHub
 integration, which mints a DOI per release plus a concept DOI that always resolves to the
-latest one. **Cite the concept DOI** unless you need to pin an exact version.
+latest one.
 
-> Not yet archived. To set it up: enable this repository under Zenodo → *GitHub*, then
-> publish a GitHub release — Zenodo archives the tag and mints the DOI. Afterwards, add the
-> DOI badge here and the `doi:` field to `CITATION.cff`, and note that Zenodo picks up
-> `.zenodo.json` at the moment the release is published, so any metadata change has to be
-> committed before the tag.
+| | DOI |
+|---|---|
+| **Cite this** — all versions, always resolves to the latest | [10.5281/zenodo.23682602](https://doi.org/10.5281/zenodo.23682602) |
+| v1.0.0 only, pinned to that exact snapshot | [10.5281/zenodo.23682603](https://doi.org/10.5281/zenodo.23682603) |
+
+Cite the concept DOI unless you need to pin an exact version: a later release moves it to
+the newer snapshot, so a DOI printed in the manuscript keeps resolving to current code.
+
+To cut a new version, publish another GitHub release. Zenodo reads `.zenodo.json` **from
+the tagged commit at the moment the release is published**, so any metadata change has to
+be committed before the tag — editing `main` afterwards does not alter an existing
+record.
 
 ## References
 
