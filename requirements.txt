@@ -1,9 +1,16 @@
-# Analysis was run on Python 3.9 with the versions below.
+# The analysis was run on Python 3.9.18. The pinned versions below are the ones used;
+# newer releases of these packages have no wheels for 3.9, and these have none for 3.13+,
+# so install into a 3.9 environment (e.g. conda create -n gpcrome python=3.9).
+
+# --- scripts/ : scoring, annotation tables and the figures ---
 pandas==2.2.1
 numpy==1.26.4
 scipy==1.11.4
 matplotlib==3.8.4
-openpyxl==3.1.2
+openpyxl==3.1.2      # pandas' .xlsx engine, used indirectly by read_excel
+
+# --- pipeline/ : FASTQ -> counts (not needed to redraw the figures) ---
 biopython==1.83
-# pipeline only (FASTQ -> counts); fastp is a separate binary
-cutadapt==4.6
+cutadapt==5.0
+# fastp 1.3.2 is a separate binary, not a Python package:
+#   conda install -c bioconda fastp=1.3.2

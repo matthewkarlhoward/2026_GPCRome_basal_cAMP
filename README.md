@@ -97,6 +97,62 @@ latest one. **Cite the concept DOI** unless you need to pin an exact version.
 > `.zenodo.json` at the moment the release is published, so any metadata change has to be
 > committed before the tag.
 
+## References
+
+### Data
+
+The coupling annotation and the surface-expression comparison are not ours; cite them in
+their own right. Redistribution terms are in [`data/external/README.md`](data/external/README.md).
+
+- **Surface expression and the library** — Tedman A, Goel M, Shah S, Howard MK, Chamness LM,
+  Bonifasi A, Adams I, Gallagher JM, Penn WD, Nemec K, McDonald EF, Corman BN, Robinson JP,
+  Post CB, Clark PL, Babu MM, Manglik A, Kuntz CP, Coyote-Maestas W, Schlebach JP. Efficient
+  experimental characterization of the GPCRome via deep receptor scanning. *Nature
+  Communications*. 2026;17(1):9796. doi:[10.1038/s41467-026-76564-7](https://doi.org/10.1038/s41467-026-76564-7)
+- **G-protein coupling** — Harding SD, Armstrong JF, Faccenda E, Southan C, Alexander SPH,
+  Davenport AP, Spedding M, Davies JA. The IUPHAR/BPS Guide to PHARMACOLOGY in 2026.
+  *Nucleic Acids Research*. 2026;54(D1):D1446–D1456.
+  doi:[10.1093/nar/gkaf1067](https://doi.org/10.1093/nar/gkaf1067)
+  <br>`build_coupling.py` reads only the `GtoPdb` sheet, so this is the provenance of every
+  coupling call.
+- **The workbook that sheet was downloaded from** — GproteinDb asks that both its own
+  reference and the main GPCRdb reference be cited:
+  - Pándy-Szekeres G, Taracena Herrera LP, Caroli J, Kermani AA, Kulkarni Y, Keserű GM,
+    Gloriam DE. GproteinDb in 2024: new G protein-GPCR couplings, AlphaFold2-multimer models
+    and interface interactions. *Nucleic Acids Research*. 2024;52(D1):D466–D475.
+    doi:[10.1093/nar/gkad1089](https://doi.org/10.1093/nar/gkad1089)
+  - Taracena Herrera LP, Andreassen SN, Caroli J, Rodríguez-Espigares I, Kermani AA,
+    Keserű GM, Kooistra AJ, Pándy-Szekeres G, Gloriam DE. GPCRdb in 2025: adding odorant
+    receptors, data mapper, structure similarity search and models of physiological ligand
+    complexes. *Nucleic Acids Research*. 2025;53(D1):D425–D435.
+    doi:[10.1093/nar/gkae1065](https://doi.org/10.1093/nar/gkae1065)
+
+### Software
+
+Versions are the ones this screen was actually run with, read from the run's own logs and
+from `requirements.txt`.
+
+| Tool | Version | Citation |
+|---|---|---|
+| fastp | 1.3.2 | Chen S. fastp 1.0: an ultra-fast all-round tool for FASTQ data quality control and preprocessing. *iMeta*. 2025;4(5):e70078. doi:[10.1002/imt2.70078](https://doi.org/10.1002/imt2.70078) |
+| cutadapt | 5.0 | Martin M. Cutadapt removes adapter sequences from high-throughput sequencing reads. *EMBnet.journal*. 2011;17(1):10–12. doi:[10.14806/ej.17.1.200](https://doi.org/10.14806/ej.17.1.200) |
+| Biopython | 1.83 | Cock PJA, Antao T, Chang JT, et al. Biopython: freely available Python tools for computational molecular biology and bioinformatics. *Bioinformatics*. 2009;25(11):1422–1423. doi:[10.1093/bioinformatics/btp163](https://doi.org/10.1093/bioinformatics/btp163) |
+| pandas | 2.2.1 | The pandas development team. pandas-dev/pandas: Pandas. Zenodo. doi:[10.5281/zenodo.10697587](https://doi.org/10.5281/zenodo.10697587) · McKinney W. Data structures for statistical computing in Python. *Proc. 9th Python in Science Conf.* 2010:56–61. doi:[10.25080/Majora-92bf1922-00a](https://doi.org/10.25080/Majora-92bf1922-00a) |
+| NumPy | 1.26.4 | Harris CR, Millman KJ, van der Walt SJ, et al. Array programming with NumPy. *Nature*. 2020;585(7825):357–362. doi:[10.1038/s41586-020-2649-2](https://doi.org/10.1038/s41586-020-2649-2) |
+| SciPy | 1.11.4 | Virtanen P, Gommers R, Oliphant TE, et al. SciPy 1.0: fundamental algorithms for scientific computing in Python. *Nature Methods*. 2020;17(3):261–272. doi:[10.1038/s41592-019-0686-2](https://doi.org/10.1038/s41592-019-0686-2) |
+| matplotlib | 3.8.4 | Hunter JD. Matplotlib: a 2D graphics environment. *Computing in Science & Engineering*. 2007;9(3):90–95. doi:[10.1109/MCSE.2007.55](https://doi.org/10.1109/MCSE.2007.55) |
+
+fastp is cited as its 1.x paper because version 1.3.2 was used; the 2018 *Bioinformatics*
+paper covers fastp 0.x. openpyxl has no citable publication.
+
+### Identifiers
+
+Used as join keys and labels only — no data was taken from these resources, so cite them
+only if you need identifier provenance. Gene symbols follow **HGNC**
+(doi:[10.1093/nar/gkaf1229](https://doi.org/10.1093/nar/gkaf1229)), transcript IDs follow
+**Ensembl** (doi:[10.1093/nar/gkaf1239](https://doi.org/10.1093/nar/gkaf1239)), and protein
+accessions follow **UniProt** (doi:[10.1093/nar/gkae1010](https://doi.org/10.1093/nar/gkae1010)).
+
 ## Licence
 
 Copyright (c) 2026 Matthew K. Howard.

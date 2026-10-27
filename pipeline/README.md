@@ -26,7 +26,8 @@ Both run three steps:
    read by read and gives identical output.
 
 `fastp` and `cutadapt` must be on `PATH`; set `PY` and `CUTADAPT` to override the
-interpreter and binary. Count tables land in `output/`; the copies in `../data/counts/`
+interpreter and binary. **This screen was processed with fastp 1.3.2 and cutadapt 5.0 on
+Python 3.9.18**, read from the run's own `fastp.json` and cutadapt logs. Count tables land in `output/`; the copies in `../data/counts/`
 are those files.
 
 Match rate on the retained samples is 93–96% of trimmed reads. One mismatch is
