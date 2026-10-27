@@ -91,7 +91,10 @@ latest one.
 | | DOI |
 |---|---|
 | **Cite this** — all versions, always resolves to the latest | [10.5281/zenodo.23682602](https://doi.org/10.5281/zenodo.23682602) |
-| v1.0.0 only, pinned to that exact snapshot | [10.5281/zenodo.23682603](https://doi.org/10.5281/zenodo.23682603) |
+| latest version only (v1.0.1), pinned to that exact snapshot | [10.5281/zenodo.23682684](https://doi.org/10.5281/zenodo.23682684) |
+
+Every earlier version keeps its own DOI and stays resolvable; they are listed on the
+Zenodo record under *Versions*.
 
 Cite the concept DOI unless you need to pin an exact version: a later release moves it to
 the newer snapshot, so a DOI printed in the manuscript keeps resolving to current code.
