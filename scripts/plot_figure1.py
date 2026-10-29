@@ -6,31 +6,24 @@
             e  class A by ligand family
     col 3   c  the top 30, full height
 
-Emits two versions, differing only in panel b:
-
-    F1_main_canonical.pdf      727 canonical receptors
-    F1_main_with_isoforms.pdf  all 901 scored barcodes (727 canonical + 174 alt isoforms)
+Writes F1_main_with_isoforms.pdf, whose panel b is all 901 scored barcodes
+(727 canonical + 174 alternative isoforms); panels c-e are canonical-only.
 
 Panel b carries the coupling colour key, which panel d also uses.
 
 Usage: python plot_figure1.py
 """
-import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 from matplotlib.gridspec import GridSpec
 from matplotlib.lines import Line2D
-from matplotlib.patches import Rectangle
-from scipy.stats import kruskal, mannwhitneyu
 
 import figure_style as S
 
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / "data" / "processed"      # derived tables
-EXT = ROOT / "data" / "external"        # third-party reference data
-INHOUSE = ROOT / "data" / "inhouse"     # other screens of the same library
 FIG = ROOT / "figures"
 
 COUP_C = {"Gs only": S.RED, "Gs + other": S.ROSE, "Gs secondary": S.PALEPURPLE,
@@ -54,11 +47,6 @@ ORPHAN = {"GPR6", "GPR52", "GPR161", "GPR12", "GPR62", "GPR101", "GPR26", "GPR3"
 N_TOP = 30
 
 
-def panel(fig, ax, letter, dx=0.052, dy=0.012):
-    bb = ax.get_position()
-    fig.text(bb.x0 - dx, bb.y1 + dy, letter, va="bottom", ha="left")
-
-
 def load():
     can = pd.read_csv(HERE / "canonical_scores_ranked.csv")
     bar = pd.read_csv(HERE / "basal_scores_per_barcode.csv")
@@ -80,7 +68,7 @@ def draw_cartoon_slot(fig, ax):
 
 
 # ------------------------------------------------------------------ panel b --
-def draw_waterfall(fig, ax, d, with_isoforms):
+def draw_waterfall(fig, ax, d):
     d = d.sort_values("score", ascending=False).reset_index(drop=True)
     y = np.arange(len(d))
     ax.barh(y, d["score"], height=1.0, linewidth=0,
@@ -120,7 +108,6 @@ def draw_coupling(fig, ax, can, med):
 def draw_ligand(fig, ax, can, feat):
     A = can.merge(feat[["symbol", "gpcr_class"]], on="symbol", how="left")
     A = A[A["gpcr_class"] == "A"].dropna(subset=["ligand_family"])
-    olf = A[A["ligand_family"] == "olfactory"]
     rest = A[A["ligand_family"] != "olfactory"]
     fams = (A.groupby("ligand_family")["score"].agg(["size", "median"])
             .query("size >= 5").sort_values("median"))
@@ -134,14 +121,9 @@ def draw_ligand(fig, ax, can, feat):
                    medianprops=dict(color=S.BLACK))
         ax.text(1.035, i, f"{len(v)}", va="center", ha="left", color=S.GREY1)
     ax.axvline(rest["score"].median(), c=S.GREY2, ls="--", zorder=0)
-    u, pv = mannwhitneyu(rest["score"], olf["score"], alternative="greater")
-    k_ = kruskal(*[v["score"].to_numpy() for _, v in rest.groupby("ligand_family")
-                   if len(v) > 4])
     ax.set_yticks(range(len(order)), order)
     ax.set(xlim=(0, 1.0), xticks=[0, 0.25, 0.5, 0.75, 1], ylim=(-0.7, len(order) - 0.3),
            xlabel="Basal cAMP score")
-    return (f"olfactory vs rest of class A: AUC {u / (len(olf) * len(rest)):.2f}, "
-            f"p = {pv:.0e}; among the other nine families Kruskal p = {k_.pvalue:.2f}")
 
 
 # ------------------------------------------------------------------ panel c --
@@ -199,7 +181,7 @@ def draw_top30(fig, ax, can, med):
     return [(leg1, bb.x0 - 0.062), (leg2, bb.x1 + 0.045)]
 
 
-def build(with_isoforms, can, bar, feat):
+def build(can, bar, feat):
     S.apply()
     med = can["score"].median()
     fig = S.figure(165, 124)
@@ -215,9 +197,8 @@ def build(with_isoforms, can, bar, feat):
     bb = ax_c.get_position()                      # raise it to clear its key
     ax_c.set_position([bb.x0, bb.y0 + 0.080, bb.width, bb.height - 0.080])
 
-    src = bar if with_isoforms else can
-    wmed = src["score"].median()
-    draw_waterfall(fig, ax_b, src, with_isoforms)
+    wmed = bar["score"].median()
+    draw_waterfall(fig, ax_b, bar)
     draw_coupling(fig, ax_d, can, med)
     draw_ligand(fig, ax_e, can, feat)
     keys = draw_top30(fig, ax_c, can, med)
@@ -231,16 +212,15 @@ def build(with_isoforms, can, bar, feat):
     for leg, xa in keys:
         leg.set_bbox_to_anchor((xa, y_lab), transform=fig.transFigure)
 
-    name = "F1_main_with_isoforms" if with_isoforms else "F1_main_canonical"
+    name = "F1_main_with_isoforms"
     S.save(fig, FIG / name)
-    print(f"  {name}: waterfall n = {len(src)}, median {wmed:.3f}")
+    print(f"  {name}: waterfall n = {len(bar)}, median {wmed:.3f}")
 
 
 def main():
     can, bar, feat = load()
     print("Figure 1, 165 mm, three columns")
-    build(False, can, bar, feat)
-    build(True, can, bar, feat)
+    build(can, bar, feat)
     print("done")
 
 

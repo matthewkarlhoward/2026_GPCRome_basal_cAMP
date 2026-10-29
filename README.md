@@ -24,9 +24,9 @@ docs/         methods and caveats, sequencing QC, panel -> script map
 ```
 
 - **[`docs/FIGURE_MAP.md`](docs/FIGURE_MAP.md)** — which script drew which panel.
-- **[`docs/METHODS.md`](docs/METHODS.md)** — how the scores are computed and the three
-  confounds to know about before reusing them. Read it before quoting any number from
-  here.
+- **[`docs/METHODS.md`](docs/METHODS.md)** — how the scores are computed, where the
+  coupling annotation comes from, and what to know before reusing them. Read it before
+  quoting any number from here.
 
 Cartoons (Figure 1a) were drawn by hand and the FACS gating plots (Supplemental Figure 1a)
 were exported from FlowJo; neither is produced here.
@@ -49,7 +49,10 @@ interpreter is `python3`.
 The **six derived tables** in `data/processed/` regenerate byte-identically from
 `data/counts/` plus the reference data under `data/external/`, `data/inhouse/` and
 `data/library/`. The seventh file there, `literature_constitutive_activity.csv`, is a
-hand-curated **input** that nothing regenerates — do not delete it.
+hand-curated **input** that nothing regenerates — do not delete it. Nor delete
+`data/inhouse/legacy_coupling.csv`: it is superseded for most receptors but is still the
+last-resort coupling source for 42 of the 901 scored barcodes, so removing it changes
+Figure 1b, Figure 1d and Supplemental Table 1 (see `docs/METHODS.md`).
 
 | Step | Script | Writes |
 |---|---|---|
@@ -66,9 +69,7 @@ hand-curated **input** that nothing regenerates — do not delete it.
 | 11 | `scripts/make_supp_table.py` | **Supplemental Table 1** |
 
 Steps 1–6 build tables and draw nothing; steps 7–10 draw and write nothing; step 11
-writes `tables/supp_table1_GPCRome_basal.csv` and draws nothing. Besides the
-published panels, step 7 also emits `F1_main_canonical` (a canonical-only variant of panel
-b that was not used) and step 8 `Q_qc_strip` (panels b–e pre-arranged as one strip).
+writes `tables/supp_table1_GPCRome_basal.csv` and draws nothing.
 
 ### From raw reads
 
@@ -97,7 +98,7 @@ latest one.
 | | DOI |
 |---|---|
 | **Cite this** — all versions, always resolves to the latest | [10.5281/zenodo.23682602](https://doi.org/10.5281/zenodo.23682602) |
-| latest version only (v1.1.0), pinned to that exact snapshot | [10.5281/zenodo.23754403](https://doi.org/10.5281/zenodo.23754403) |
+| latest version only, pinned to that exact snapshot | listed on the Zenodo record under *Versions* |
 
 Every earlier version keeps its own DOI and stays resolvable; they are listed on the
 Zenodo record under *Versions*.
@@ -150,13 +151,13 @@ from `requirements.txt`.
 | fastp | 1.3.2 | Chen S. fastp 1.0: an ultra-fast all-round tool for FASTQ data quality control and preprocessing. *iMeta*. 2025;4(5):e70078. doi:[10.1002/imt2.70078](https://doi.org/10.1002/imt2.70078) |
 | cutadapt | 5.0 | Martin M. Cutadapt removes adapter sequences from high-throughput sequencing reads. *EMBnet.journal*. 2011;17(1):10–12. doi:[10.14806/ej.17.1.200](https://doi.org/10.14806/ej.17.1.200) |
 | Biopython | 1.83 | Cock PJA, Antao T, Chang JT, et al. Biopython: freely available Python tools for computational molecular biology and bioinformatics. *Bioinformatics*. 2009;25(11):1422–1423. doi:[10.1093/bioinformatics/btp163](https://doi.org/10.1093/bioinformatics/btp163) |
-| pandas | 2.2.1 | The pandas development team. pandas-dev/pandas: Pandas. Zenodo. doi:[10.5281/zenodo.10697587](https://doi.org/10.5281/zenodo.10697587) · McKinney W. Data structures for statistical computing in Python. *Proc. 9th Python in Science Conf.* 2010:56–61. doi:[10.25080/Majora-92bf1922-00a](https://doi.org/10.25080/Majora-92bf1922-00a) |
-| NumPy | 1.26.4 | Harris CR, Millman KJ, van der Walt SJ, et al. Array programming with NumPy. *Nature*. 2020;585(7825):357–362. doi:[10.1038/s41586-020-2649-2](https://doi.org/10.1038/s41586-020-2649-2) |
-| SciPy | 1.11.4 | Virtanen P, Gommers R, Oliphant TE, et al. SciPy 1.0: fundamental algorithms for scientific computing in Python. *Nature Methods*. 2020;17(3):261–272. doi:[10.1038/s41592-019-0686-2](https://doi.org/10.1038/s41592-019-0686-2) |
-| matplotlib | 3.8.4 | Hunter JD. Matplotlib: a 2D graphics environment. *Computing in Science & Engineering*. 2007;9(3):90–95. doi:[10.1109/MCSE.2007.55](https://doi.org/10.1109/MCSE.2007.55) |
+| pandas | 3.0.1 | The pandas development team. pandas-dev/pandas: Pandas. Zenodo. doi:[10.5281/zenodo.10697587](https://doi.org/10.5281/zenodo.10697587) · McKinney W. Data structures for statistical computing in Python. *Proc. 9th Python in Science Conf.* 2010:56–61. doi:[10.25080/Majora-92bf1922-00a](https://doi.org/10.25080/Majora-92bf1922-00a) |
+| NumPy | 2.4.3 | Harris CR, Millman KJ, van der Walt SJ, et al. Array programming with NumPy. *Nature*. 2020;585(7825):357–362. doi:[10.1038/s41586-020-2649-2](https://doi.org/10.1038/s41586-020-2649-2) |
+| SciPy | 1.17.1 | Virtanen P, Gommers R, Oliphant TE, et al. SciPy 1.0: fundamental algorithms for scientific computing in Python. *Nature Methods*. 2020;17(3):261–272. doi:[10.1038/s41592-019-0686-2](https://doi.org/10.1038/s41592-019-0686-2) |
+| matplotlib | 3.10.8 | Hunter JD. Matplotlib: a 2D graphics environment. *Computing in Science & Engineering*. 2007;9(3):90–95. doi:[10.1109/MCSE.2007.55](https://doi.org/10.1109/MCSE.2007.55) |
 
 fastp is cited as its 1.x paper because version 1.3.2 was used; the 2018 *Bioinformatics*
-paper covers fastp 0.x. openpyxl has no citable publication.
+paper covers fastp 0.x. openpyxl and pillow have no citable publication.
 
 ### Identifiers
 

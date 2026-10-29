@@ -21,20 +21,16 @@ Supplementary Data 1).
 
 Usage: python plot_surface_vs_basal.py
 """
-import sys
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 from matplotlib.lines import Line2D
-from scipy.stats import mannwhitneyu, pearsonr, spearmanr
+from scipy.stats import spearmanr
 
 import figure_style as S
 
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / "data" / "processed"      # derived tables
-EXT = ROOT / "data" / "external"        # third-party reference data
-INHOUSE = ROOT / "data" / "inhouse"     # other screens of the same library
 FIG = ROOT / "figures"
 GS_COL = S.RED
 OTHER_COL = S.GREY1   # same grey as the replicate-correlation scatter (Q4)
@@ -43,7 +39,7 @@ OTHER_COL = S.GREY1   # same grey as the replicate-correlation scatter (Q4)
 def load():
     t = pd.read_csv(HERE / "basal_vs_tedman_pme.csv")
     a = pd.read_csv(HERE / "coupling_annotation.csv")
-    d = t.merge(a[["Barcode", "gs_any", "gs_primary"]], on="Barcode", how="left")
+    d = t.merge(a[["Barcode", "gs_any"]], on="Barcode", how="left")
     d = d[d["tedman_pme"].notna() & d["score"].notna()].copy()
     d["gs_any"] = d["gs_any"].fillna(False).astype(bool)
     return d
@@ -83,12 +79,9 @@ def panel(d, ax=None):
 
     if fig is not None:
         S.save(fig, FIG / "P_surface_vs_basal")
-    u, pu = mannwhitneyu(g["score"], d.loc[~d["gs_any"], "score"], alternative="greater")
-    auc = u / (len(g) * (~d["gs_any"]).sum())
     print(f"  n={len(d)} constructs, Gs {len(g)}, other {(~d['gs_any']).sum()}")
-    print(f"  surface vs basal: rho={rho:.3f} (p={pv:.1e}), r={pearsonr(d['tedman_pme'], d['score'])[0]:.3f}")
+    print(f"  surface vs basal: rho={rho:.3f} (p={pv:.1e})")
     print(f"  within Gs: rho={rho_g:.3f} (p={spearmanr(g['tedman_pme'], g['score']).pvalue:.1e})")
-    print(f"  Gs vs other basal score: AUC={auc:.3f}, p={pu:.1e}")
     print(f"  Gs median PME {g['tedman_pme'].median():.0f} vs "
           f"{d.loc[~d['gs_any'], 'tedman_pme'].median():.0f}")
 

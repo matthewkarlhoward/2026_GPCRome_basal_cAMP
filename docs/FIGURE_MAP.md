@@ -17,10 +17,8 @@ restyled after export, so the font sizes and line weights in `scripts/figure_sty
 | d | `scripts/plot_figure1.py` | `figures/F1_main_with_isoforms.pdf`, panel d |
 | e | `scripts/plot_figure1.py` | `figures/F1_main_with_isoforms.pdf`, panel e |
 
-`plot_figure1.py` emits two versions that differ only in panel b:
-`F1_main_canonical` (727 canonical receptors) and `F1_main_with_isoforms`
-(all 901 scored barcodes). **The published figure is the with-isoforms version**; panels
-c–e are canonical-only in both.
+`plot_figure1.py` emits one figure, `F1_main_with_isoforms`, whose panel b carries all 901
+scored barcodes (727 canonical + 174 alternative isoforms); panels c–e are canonical-only.
 
 ## Supplemental Figure 1 — sort and screen QC
 
@@ -32,8 +30,6 @@ c–e are canonical-only in both.
 | d | `scripts/plot_qc_panels.py` | `figures/Q3_score_histogram.pdf` |
 | e | `scripts/plot_qc_panels.py` | `figures/Q4_replicates.pdf` |
 | f | `scripts/plot_surface_vs_basal.py` | `figures/P_surface_vs_basal.pdf` |
-
-`Q_qc_strip.pdf` is panels b–e pre-arranged as one 165 × 46 mm strip.
 
 ## The tables behind them
 
@@ -48,10 +44,10 @@ Six scripts build the tables the panels read. None of them plots anything.
 | `build_surface_join.py` | `basal_vs_tedman_pme.csv` | Supp 1f, Supp 2c,e |
 | `build_isoform_table.py` | `alt_vs_canonical_isoform.csv` | Supp 2a–c,e |
 
-The last three were extracted verbatim from the larger exploratory scripts that originally
-wrote these tables (`plot_basal.py`, `plot_class_features.py`, `plot_basal_vs_tedman.py`).
-Their output is byte-identical; the plotting code those scripts carried is not part of
-this release.
+The last three were extracted from the larger exploratory scripts that originally wrote
+these tables (`plot_basal.py`, `plot_class_features.py`, `plot_basal_vs_tedman.py`). Their
+columns are those scripts', less the ones no published panel reads; the plotting code those
+scripts carried is not part of this release.
 
 ## Supplemental Figure 2 — isoform vignettes
 

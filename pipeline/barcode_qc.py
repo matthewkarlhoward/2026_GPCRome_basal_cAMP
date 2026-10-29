@@ -12,7 +12,6 @@ Only 10-bp reads are scored here; other lengths are tallied separately
 
 Usage: python barcode_qc.py <count_barcodes_tool dir> <out dir>
 """
-import glob
 import os
 import re
 import sys

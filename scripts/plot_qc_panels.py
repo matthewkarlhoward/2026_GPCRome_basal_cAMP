@@ -4,7 +4,6 @@
   Q2_reads_per_barcode  coverage across the library, split by olfactory   (Supp Fig 1c)
   Q3_score_histogram    distribution of the basal cAMP score              (Supp Fig 1d)
   Q4_replicates         replicate 1 vs replicate 2                        (Supp Fig 1e)
-  Q_qc_strip            the four above pre-arranged as one 165 mm row
 
 Reads: data/processed/basal_scores_per_barcode.csv, coupling_annotation.csv,
        data/qc/read_fate.csv
@@ -12,31 +11,26 @@ Reads: data/processed/basal_scores_per_barcode.csv, coupling_annotation.csv,
 The two replicate sorts, 09/24 and 09/26, are "replicate 1" and "replicate 2" below.
 
 Q2 shows that olfactory receptors are not evenly spread through the coverage
-distribution. They are 40% of the scored library but 82% of the
-bottom read-count quartile and 11% of the top, with median coverage 720 reads against
-22,606 for everything else (AUC 0.83, p = 9e-63). That is the origin of the library's
-bimodality and of the abundance confound described in docs/METHODS.md.
+distribution. They are 40% of the scored library, with median coverage 720 reads against
+22,606 for everything else. That is the origin of the library's bimodality.
 
 Usage: python plot_qc_panels.py
 """
-import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 from matplotlib.lines import Line2D
-from scipy.stats import mannwhitneyu, pearsonr, spearmanr
+from scipy.stats import pearsonr, spearmanr
 
 import figure_style as S
 
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / "data" / "processed"      # derived tables
-EXT = ROOT / "data" / "external"        # third-party reference data
-INHOUSE = ROOT / "data" / "inhouse"     # other screens of the same library
 FIG = ROOT / "figures"
 RUN = HERE.parent
-D2, D3 = "20260924", "20260926"
-# s5-s8 are day 2 bins a-d, s9-s12 are day 3 bins a-d
+DAY_A, DAY_B = "20260924", "20260926"
+# s5-s8 are the 20260924 bins a-d, s9-s12 the 20260926 bins a-d
 SORTED = [(f"s{i}_basal_S{i}", lab) for i, lab in
           zip(range(5, 13), ["09/24 a", "09/24 b", "09/24 c", "09/24 d",
                              "09/26 a", "09/26 b", "09/26 c", "09/26 d"])]
@@ -104,13 +98,9 @@ def q2_reads_per_barcode(b, ax=None):
     ax.set_title("Library coverage")
     ax.legend(handles=keys, loc="upper left", handlelength=0.9, handletextpad=0.35,
               borderpad=0.15, labelspacing=0.32, frameon=False)
-    lo = r < r.quantile(0.25)
-    u, p = mannwhitneyu(r[~b["olf"]], r[b["olf"]], alternative="greater")
     _save(fig, "Q2_reads_per_barcode")
     print(f"  Q2: olfactory median {r[b['olf']].median():.0f} vs "
-          f"{r[~b['olf']].median():.0f} reads; {100 * b.loc[lo, 'olf'].mean():.0f}% of the "
-          f"bottom quartile is olfactory (AUC {u / (b['olf'].sum() * (~b['olf']).sum()):.2f}, "
-          f"p={p:.0e})")
+          f"{r[~b['olf']].median():.0f} reads")
 
 
 # ----------------------------------------------------------------- Q3 --------
@@ -134,7 +124,7 @@ def q4_replicates(b, ax=None):
     fig = None
     if ax is None:
         fig, ax = panel(50, 50, left=0.25, bottom=0.21, width=0.71, height=0.735)
-    x, y = b[f"{D2}_wmb"], b[f"{D3}_wmb"]
+    x, y = b[f"{DAY_A}_wmb"], b[f"{DAY_B}_wmb"]
     ok = x.notna() & y.notna()
     x, y = x[ok], y[ok]
     ax.plot([0, 1], [0, 1], c=S.GREY2, lw=0.5, zorder=1)
@@ -152,20 +142,6 @@ def q4_replicates(b, ax=None):
     print(f"  Q4: r={r:.3f}, rho={rho:.3f}, n={len(x)}")
 
 
-def strip(b):
-    """Panels b-e of Supplemental Figure 1, pre-arranged as one 165 mm row."""
-    from matplotlib.gridspec import GridSpec
-    fig = S.figure(165, 46)
-    gs = GridSpec(1, 4, figure=fig, left=0.065, right=0.99, top=0.885, bottom=0.275,
-                  wspace=0.62)
-    q1_reads_per_sample(fig.add_subplot(gs[0, 0]))
-    q2_reads_per_barcode(b, fig.add_subplot(gs[0, 1]))
-    q3_score_histogram(b, fig.add_subplot(gs[0, 2]))
-    q4_replicates(b, fig.add_subplot(gs[0, 3]))
-    S.save(fig, FIG / "Q_qc_strip")
-    print("  strip: figures/Q_qc_strip (165 x 46 mm)")
-
-
 def main():
     S.apply()
     b = load()
@@ -174,7 +150,6 @@ def main():
     q2_reads_per_barcode(b)
     q3_score_histogram(b)
     q4_replicates(b)
-    strip(b)
     print("done -> figures/Q*.pdf")
 
 

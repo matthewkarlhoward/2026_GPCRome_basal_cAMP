@@ -21,10 +21,7 @@ from pathlib import Path
 from itertools import product
 from textwrap import wrap
 
-import numpy as np
 import pandas as pd
-from matplotlib.gridspec import GridSpec
-from matplotlib.lines import Line2D
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import figure_style as S  # noqa: E402
@@ -79,11 +76,6 @@ def architecture(sym, lib):
                          length=len(ap) - TAGLEN, n_shared=max(n - TAGLEN, 0),
                          c_shared=c))
     return len(cp) - TAGLEN, pd.DataFrame(rows)
-
-
-def panel(fig, ax, letter, dx=0.055, dy=0.012):
-    bb = ax.get_position()
-    fig.text(bb.x0 - dx, bb.y1 + dy, letter, va="bottom", ha="left", weight="bold")
 
 
 # ------------------------------------------------------------------ panel a --

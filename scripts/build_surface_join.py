@@ -13,12 +13,6 @@ and are never averaged together.
 Table-only. Extracted verbatim from plot_basal_vs_tedman.py, whose plotting code is not
 part of this release; the output is byte-identical to what that script wrote.
 
-Optional, and NOT part of this release:
-  data/inhouse/20260422_surface_screen_weighted_mean_bin.csv   in-house April 2026 surface
-      screen. That screen shares experimental lineage with this one, so it is not an
-      independent surface measurement and its per-construct values are not published
-      here. Without it the april_* columns are left out; everything else is unchanged.
-
 Usage: python scripts/build_surface_join.py
 """
 from __future__ import annotations
@@ -32,16 +26,11 @@ import pandas as pd
 REPO = Path(__file__).resolve().parents[1]
 ROOT = REPO / "data" / "processed"      # derived tables
 EXT = REPO / "data" / "external"        # third-party reference data
-INHOUSE = REPO / "data" / "inhouse"     # other screens of the same library
 TED = EXT / "tedman2026"
 S3 = TED / "41467_2026_76564_MOESM3_ESM.xlsx"
-APRIL = INHOUSE / "20260422_surface_screen_weighted_mean_bin.csv"
-HAVE_APRIL = APRIL.exists()   # see the docstring; absent in the public release
-APRIL_MIN_READS = 200
 # Tedman PME compresses towards its 6515 maximum; above ~4000 the reported
 # per-receptor SD collapses ~10-fold, so those values are a lower bound only.
 PME_COMPRESSED = 4000
-COLLAPSE = {}
 
 ENST_RE = re.compile(r"(ENST\d+)")
 
@@ -60,9 +49,7 @@ def load():
 
     def coupling_of(sym):
         v = cmap.get(sym)
-        if v is None or pd.isna(v):
-            return "unassigned"
-        return COLLAPSE.get(v, v)
+        return "unassigned" if v is None or pd.isna(v) else v
 
     basal["coupling"] = basal.symbol.map(coupling_of)
 
@@ -78,20 +65,9 @@ def load():
     ambiguous = set(iso.loc[iso.tid.duplicated(keep=False), "tid"])
     iso_u = iso[~iso.sp_ha].drop_duplicates("tid")
 
-    if HAVE_APRIL:
-        april = pd.read_csv(APRIL)[["Barcode", "weighted_mean_bin", "total_count"]]
-        april = april.rename(columns={"weighted_mean_bin": "april_surface_wmb",
-                                      "total_count": "april_reads"})
-    else:
-        april = pd.DataFrame({"Barcode": pd.Series(dtype=str),
-                              "april_surface_wmb": pd.Series(dtype=float),
-                              "april_reads": pd.Series(dtype=float)})
-
     # ---- canonical barcodes -> Canonical sheet
     keep = ["tid", "Immunostaining Intensity", "Immunostaining Standard Deviation",
-            "GPCR Class", "Protein Length", "GC Content",
-            "Library RPKM RNAseq average", "Mock RPKM RNAseq average",
-            "TE", "mono_TPM", "rna_total_coverage"]
+            "GPCR Class"]
     bc = basal[basal.isoform == "canonical"].merge(
         can[keep], left_on="transcript_id", right_on="tid", how="left")
 
@@ -113,8 +89,6 @@ def load():
 
     for d in (bc, ba):
         d.drop(columns=[c for c in ("tid",) if c in d.columns], inplace=True)
-    bc = bc.merge(april, on="Barcode", how="left")
-    ba = ba.merge(april, on="Barcode", how="left")
 
     bc["pme"] = bc["Immunostaining Intensity"]
     bc["pme_sd"] = bc["Immunostaining Standard Deviation"]
@@ -122,7 +96,6 @@ def load():
     ba["pme_sd"] = ba["Surface Expression Standard Deviation"]
     for d in (bc, ba):
         d["log10_pme"] = np.log10(d["pme"])
-        d["in_april_subset"] = d["april_reads"].fillna(0) >= APRIL_MIN_READS
 
     bc["olfactory"] = bc["GPCR Class"].astype(str).str.contains("Olfactory")
     return bc, ba
@@ -131,9 +104,7 @@ def load():
 def write_csv(bc, ba):
     cols = ["symbol", "transcript_id", "isoform", "Barcode", "score", "score_sd",
             "total_reads", "pme", "log10_pme", "pme_sd", "coupling"]
-    # the in-house April columns are written only when that screen is available locally
-    apr = ["april_surface_wmb", "april_reads", "in_april_subset"] if HAVE_APRIL else []
-    a = bc[cols + ["GPCR Class", "olfactory"] + apr].copy()
+    a = bc[cols + ["GPCR Class", "olfactory"]].copy()
     for c in ("canonical_pme", "canonical_pme_sd", "pct_change_pme",
               "canonical_basal", "d_basal", "ambiguous_construct"):
         a[c] = np.nan
@@ -144,9 +115,9 @@ def write_csv(bc, ba):
                           "Canonical Surface Expression Standard Deviation":
                               "canonical_pme_sd",
                           "% change in PME": "pct_change_pme"})
-    b = b[cols + ["GPCR Class", "olfactory"] + apr
-          + ["canonical_pme", "canonical_pme_sd", "pct_change_pme",
-             "canonical_basal", "d_basal", "ambiguous_construct"]]
+    b = b[cols + ["GPCR Class", "olfactory",
+                  "canonical_pme", "canonical_pme_sd", "pct_change_pme",
+                  "canonical_basal", "d_basal", "ambiguous_construct"]]
     out = pd.concat([a, b], ignore_index=True)
     out = out.rename(columns={"pme": "tedman_pme", "log10_pme": "tedman_log10_pme",
                               "pme_sd": "tedman_pme_sd", "GPCR Class": "gpcr_class"})

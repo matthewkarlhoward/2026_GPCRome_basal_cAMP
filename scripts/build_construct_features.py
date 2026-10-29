@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 """receptor_construct_features.csv -- one row per barcoded construct.
 
-Joins the basal scores to the library annotation (GPCR class, TMD count, signal
-peptide, ORF length) and to the coupling annotation, and assigns each class-A
-receptor a ligand family from its gene symbol.
+Joins the basal scores to the library annotation (GPCR class) and to the coupling
+annotation, and assigns each class-A receptor a ligand family from its gene symbol.
 
-Table-only. Extracted verbatim from plot_class_features.py, whose plotting code is not
-part of this release; the output is byte-identical to what that script wrote.
+Table-only. Extracted from plot_class_features.py, whose plotting code is not part
+of this release; the columns are that script's, less the ones no published panel reads.
 
 Usage: python scripts/build_construct_features.py
 """
@@ -54,11 +53,8 @@ def load():
     s = s.loc[s["n_days"] == 2].copy()
 
     lib = pd.read_csv(LIB_CSV, encoding="utf-8-sig", low_memory=False)
-    lib = lib.rename(columns={"unique_molecular_identifier": "Barcode",
-                              "signal_peptide_topcons": "signal_peptide",
-                              "gly_fix?": "gly_fix", "len_gene_bloc_seq": "orf_len"})
-    keep = ["Barcode", "gpcr_class", "num_tmds", "signal_peptide", "gly_fix", "orf_len",
-            "approved_name", "num_goldengate_sites_removed"]
+    lib = lib.rename(columns={"unique_molecular_identifier": "Barcode"})
+    keep = ["Barcode", "gpcr_class"]
     df = s.merge(lib[keep], on="Barcode", how="left", validate="one_to_one")
 
     coup = (pd.read_csv(HERE / "coupling_annotation.csv")[
@@ -70,11 +66,6 @@ def load():
 
     df["ligand_family"] = np.where(df["gpcr_class"].eq("A"),
                                    df["symbol"].map(assign_family), "n/a (non-class-A)")
-    df["is_orphan"] = (df["gpcr_class"].eq("A")
-                       & (df["ligand_family"].eq("orphan")
-                          | df["approved_name"].fillna("").str.contains("orphan", case=False)))
-    df["log_reads"] = np.log10(df["total_reads"])
-    df["read_q"] = pd.qcut(df["total_reads"], 4, labels=["Q1", "Q2", "Q3", "Q4"])
     return df
 
 
@@ -82,8 +73,8 @@ def load():
 def main():
     df = load()
     out_cols = ["symbol", "transcript_id", "isoform", "Barcode", "score", "score_sd",
-                "total_reads", "coupling", "gpcr_class", "ligand_family", "is_orphan",
-                "num_tmds", "signal_peptide", "gly_fix", "orf_len", "gs_primary", "gs_any"]
+                "total_reads", "coupling", "gpcr_class", "ligand_family",
+                "gs_primary", "gs_any"]
     df[out_cols].to_csv(HERE / "receptor_construct_features.csv", index=False)
     print(f"wrote receptor_construct_features.csv ({len(df)} rows)")
 

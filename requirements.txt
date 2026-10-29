@@ -1,15 +1,25 @@
-# The analysis was run on Python 3.9.18. The pinned versions below are the ones used;
-# newer releases of these packages have no wheels for 3.9, and these have none for 3.13+,
-# so install into a 3.9 environment (e.g. conda create -n gpcrome python=3.9).
+# Versions this repository was last run and verified with (Python 3.14, macOS).
+# These are the versions that produced the committed figures and the six derived
+# tables in data/processed/, and `bash run_all.sh` reproduces that output under
+# them: the tables come back byte-identical and each panel differs from the
+# committed PDF only in its /CreationDate.
+#
+# Matplotlib's version matters more than the rest. Font metrics changed between
+# 3.8 and 3.10, so an older matplotlib still builds every panel but redraws all
+# of its text; use the pin below to reproduce what is committed here.
 
 # --- scripts/ : scoring, annotation tables and the figures ---
-pandas==2.2.1
-numpy==1.26.4
-scipy==1.11.4
-matplotlib==3.8.4
-openpyxl==3.1.2      # pandas' .xlsx engine, used indirectly by read_excel
+numpy==2.4.3
+pandas==3.0.1
+scipy==1.17.1
+matplotlib==3.10.8
+pillow==12.1.1       # matplotlib writes the PNGs through it
+openpyxl==3.1.5      # pandas' .xlsx engine, used indirectly by read_excel
 
 # --- pipeline/ : FASTQ -> counts (not needed to redraw the figures) ---
+# The pipeline ran in its own environment, on Python 3.9.18, and these two are
+# not installed alongside the packages above. The versions are the ones read
+# from the run's own logs (see pipeline/README.md).
 biopython==1.83
 cutadapt==5.0
 # fastp 1.3.2 is a separate binary, not a Python package:

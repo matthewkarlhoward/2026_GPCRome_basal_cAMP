@@ -9,8 +9,8 @@ Reads:  data/processed/basal_scores_per_barcode.csv, coupling_annotation.csv,
         literature_constitutive_activity.csv
 Writes: data/processed/canonical_scores_ranked.csv
 
-Table-only. Extracted verbatim from plot_basal.py, whose plotting code is not
-part of this release; the output is byte-identical to what that script wrote.
+Table-only. Extracted from plot_basal.py, whose plotting code is not part of this
+release; the columns are that script's, less the ones no published panel reads.
 
 Usage: python scripts/build_ranked_tables.py
 """
@@ -42,9 +42,8 @@ def main():
     lit = pd.read_csv(HERE / "literature_constitutive_activity.csv")
     can = can.merge(lit, on="symbol", how="left")
     can["ca_evidence"] = can["ca_evidence"].fillna("not reviewed")
-    can["low_depth"] = can["total_reads"] < 1000
     can["rank"] = np.arange(1, len(can) + 1)
-    cols = ["rank", "symbol", "coupling", "score", "score_sd", "total_reads", "low_depth",
+    cols = ["rank", "symbol", "coupling", "score", "score_sd", "total_reads",
             "ca_evidence", "ca_mechanism", "ca_caveat", "ca_source", "transcript_id", "Barcode",
             "gs_primary", "gs_any"]
     can[cols].to_csv(HERE / "canonical_scores_ranked.csv", index=False, float_format="%.4g")

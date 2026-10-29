@@ -15,15 +15,12 @@ variants, same HEK293T system, anti-HA immunostaining across five sorted quintil
 to our scores on Ensembl transcript ID. Several of this manuscript's authors are authors
 of that paper.
 
-Two cautions, both documented in `../../docs/METHODS.md`:
+One caution, documented in `../../docs/METHODS.md`:
 
 - **The intensity estimate saturates at the top.** Cells were sorted into quintiles, so the
   top gate is open-ended and a per-receptor estimate reconstructed from bin occupancy
   cannot exceed the top bin's anchor. Reported CV collapses 11-fold above 3000. Do not read
   fine structure above ~4000.
-- **Olfactory receptors drive a Simpson's paradox.** They are ~42% of the constructs that join to this library and carry
-  their own internal negative basal~surface correlation, so any filter that changes their
-  share changes the apparent sign of the whole-library correlation.
 
 | File | Sheet used for |
 |---|---|
@@ -34,5 +31,7 @@ Two cautions, both documented in `../../docs/METHODS.md`:
 GproteinDb / GPCRdb bulk G-protein coupling table, <https://gproteindb.org/signprot/couplings>
 (downloaded 2026-10-20; see `SOURCE.txt`). The `GtoPdb` sheet — IUPHAR/Guide to
 Pharmacology curation — is what `build_coupling.py` uses for primary and secondary
-transducers. The coupling annotation is **external to this screen**; it is not derived from
-our scores.
+transducers, and it resolves most of the library. It is **external to this screen** and is
+not derived from our scores. It is not, however, the only layer: where it is silent
+`build_coupling.py` falls back to Tedman's structural class and then to an in-house
+annotation, which between them decide 42 barcodes. See `../../docs/METHODS.md`.

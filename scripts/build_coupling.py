@@ -33,17 +33,9 @@ receptor is to Gs rather than whether Gs appears anywhere in its profile. Canoni
     Gs secondary only    0.475  (n=18)
     no documented Gs     0.34-0.46
 
-and the separation is strongest under the strictest definition, weakening as it is loosened
-(AUCs below are against non-sensory receptors only; see the comment at the AUC loop):
-
-    Gs sole primary vs rest      AUC 0.853
-    Gs among primaries vs rest   AUC 0.786
-    Gs primary or secondary      AUC 0.750
-
 These are recomputed by the script on every run -- trust its stdout over this docstring.
 
-That ordering is the expected behaviour of a Gs/cAMP readout and is itself a result. It also
-means a single "Gs vs not" split understates the signal. `coupling_display` therefore keeps
+A single "Gs vs not" split therefore understates the signal. `coupling_display` keeps
 "Gs only", "Gs + other" and "Gs secondary" as separate categories; `gs_primary` and `gs_any`
 are provided for whichever binary a given analysis needs.
 
@@ -52,6 +44,8 @@ LAYERS, most specific first, each recorded in `coupling_source`:
   2. GtoPdb secondary transducer, where no primary is curated
   3. structural class from Tedman et al. 2026: olfactory -> Golf (Gs-family),
      taste -> gustducin (Gi-family), vomeronasal -> V1R. These are not in IUPHAR's table.
+     Two receptors (TAAR6, TAAR9) reach this layer only because the legacy dict calls them
+     olfactory while Tedman classes them A; their source credits the dict, not Tedman.
   4. receptors with documented Gs coupling that IUPHAR's table does not cover at all
      (GS_DOCUMENTED below). GPR161 is here -- it is the
      subject of this paper and is absent from the IUPHAR transducer table.
@@ -67,8 +61,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 HERE = ROOT / "data" / "processed"      # derived tables
 EXT = ROOT / "data" / "external"        # third-party reference data
-INHOUSE = ROOT / "data" / "inhouse"     # other screens of the same library
-FIG = ROOT / "figures"
+INHOUSE = ROOT / "data" / "inhouse"
 LEGACY = INHOUSE / "legacy_coupling.csv"
 GTOPDB = EXT / "gproteindb" / "GPCR-G_protein_couplings.xlsx"
 TEDMAN = EXT / "tedman2026" / "41467_2026_76564_MOESM3_ESM.xlsx"
@@ -80,7 +73,7 @@ FAM = {"Gs": "gs", "Gi/o": "gi", "Gq/11": "gq", "G12/13": "g12"}
 VAGUE = {"G protein (identity unknown)", "G protein independent mechanism", "GPa1"}
 
 # Gs coupling documented in the literature for receptors IUPHAR's transducer table omits
-# entirely. Applied
+# entirely (for GPR161: Mukhopadhyay et al. 2013; Hoppe et al. 2024). Applied
 # only where layers 1-3 are silent, so IUPHAR always wins where it speaks.
 GS_DOCUMENTED = {"GPR161", "GPBAR1", "GHRHR", "LGR6", "LGR5", "ADGRD1", "ADGRG5"}
 
@@ -183,7 +176,10 @@ def main():
         elif lg == "Olfactory" or tc in CLASS_RULE:
             key = "A (Olfactory)" if lg == "Olfactory" else tc
             _, _, class_disp = CLASS_RULE[key]
-            source = "structural class (Tedman et al. 2026)"
+            # credit whichever source actually supplied the class: Tedman wherever it
+            # states one, otherwise the legacy dict's own olfactory call (TAAR6, TAAR9)
+            source = ("structural class (Tedman et al. 2026)" if tc in CLASS_RULE
+                      else "olfactory class, legacy curated dict (unverified)")
         elif sym in GS_DOCUMENTED:
             prim = {"gs"}
             source = "documented in literature, absent from IUPHAR table"
@@ -208,17 +204,8 @@ def main():
         })
     d = pd.concat([d.reset_index(drop=True), pd.DataFrame(rows)], axis=1)
 
-    # gs_family keeps its old meaning: able to signal through a Gs-family protein at all,
-    # which includes the olfactory receptors' Golf.
     d["gs_primary"] = d["couples_gs"]
     d["gs_any"] = d["couples_gs"] | d["gs_secondary"]
-    d["gs_family"] = d["couples_gs"] | d["coupling_display"].eq("Golf")
-    # back-compat columns for scripts that predate the multi-label scheme
-    d["transducer"] = d["coupling_display"]
-    d["coupling_family"] = d["coupling_display"].map(
-        {"Gs only": "Gs-family", "Gs + other": "Gs-family", "Golf": "Gs-family",
-         "Gq": "Gq-family", "Gi": "Gi-family", "gustducin": "Gi-family"}).fillna(
-        d["coupling_display"].map({"unassigned": "unknown"})).fillna("other/mixed")
 
     can = d[d["isoform"] == "canonical"]
     print(f"{len(d)} barcodes, {len(can)} canonical\n")
@@ -235,24 +222,11 @@ def main():
     print("\nmedian score by display category (canonical):")
     print(can.groupby("coupling_display")["score"].agg(["size", "median"])
           .sort_values("median", ascending=False).round(3).to_string())
-    from scipy.stats import mannwhitneyu
-    print("\nhow the separation depends on how strictly Gs coupling is defined:")
-    # Sensory receptors are excluded from the comparison set: they are 54% of the
-    # canonical library and cannot signal through a Gs/cAMP readout, so leaving them in
-    # inflates every AUC. These labels MUST match display_category()'s output.
-    nonsens = can[~can["coupling_display"].isin(["Golf", "gustducin"])]
-    for lab, mask in [("Gs sole primary", nonsens["coupling_display"].eq("Gs only")),
-                      ("Gs among primaries", nonsens["gs_primary"]),
-                      ("Gs primary or secondary", nonsens["gs_any"])]:
-        a, b = nonsens.loc[mask, "score"], nonsens.loc[~mask, "score"]
-        u, p = mannwhitneyu(a, b, alternative="greater")
-        print(f"  {lab:24s} n={len(a):3d}  AUC {u / (len(a) * len(b)):.3f}  p={p:.2g}")
 
     d[["symbol", "transcript_id", "isoform", "Barcode", "score", "legacy", "tedman_class",
        "gtopdb_primary", "gtopdb_secondary", "couples_gs", "couples_gi", "couples_gq",
        "couples_g12", "gs_secondary", "n_primary_families", "gs_primary", "gs_any",
-       "gs_family", "transducer", "coupling_family", "coupling_display",
-       "coupling_source"]].to_csv(
+       "coupling_display", "coupling_source"]].to_csv(
         HERE / "coupling_annotation.csv", index=False, float_format="%.4g")
 
 

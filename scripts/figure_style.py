@@ -44,10 +44,8 @@ GREEN = "#316B3E"
 ROSE = "#DBB8AB"        # pastel of RED
 PALEBLUE = "#CCD5EF"    # pastel of BLUE
 PALEPURPLE = "#F0EAF9"  # pastel of PURPLE
-PALELAV = "#F5F3FB"     # pastel of LAVENDER
 WHITE = "#FFFFFF"       # use with a black 0.5 pt edge
 
-GREYS = [BLACK, GREY1, GREY2, GREY3, GREY4, GREY5]
 CATEGORICAL = [BLACK, RED, BLUE, PURPLE, GREEN, LAVENDER, GREY2]
 
 
