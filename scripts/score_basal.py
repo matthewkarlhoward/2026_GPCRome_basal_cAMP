@@ -1,17 +1,13 @@
 """Weighted mean bin (WMB) per barcode per sort day, and overall basal score.
 
-Design (from the bench sheet): 3 sort days x 4 bins (a-d), plus s13 = unsorted baseline.
-    day 20260922: s1-s4   day 20260924: s5-s8   day 20260926: s9-s12
-    (sheet lists the third day as 20240926; assumed to be 2026)
-Day 20260922 (s1-s4) and the baseline (s13) are excluded from all analysis: the day-1
-bins have near-identical barcode composition (no sort separation; WMB r = -0.2 vs the
-other days, no bin relabelling rescues it), and both carry the off-library contaminant.
+Design: 2 replicate sorts x 4 bins (a-d).
+    replicate 1: 20260924, s5-s8    replicate 2: 20260926, s9-s12
 
 Scoring unit is the barcode (one construct: canonical or alt isoform), never the gene.
 
 Per day, each bin's counts are converted to frequency within that bin's library reads
-(reads matched to a reference barcode), so sequencing depth and the off-library
-contaminant barcode in s1-s4 / s13 cancel out. This assumes an equal number of cells
+(reads matched to a reference barcode), so sequencing depth cancels out. This assumes
+an equal number of cells
 was sorted into each bin. If bin cell counts are known, set CELLS below.
     WMB_day = sum_b(w_b * f_b) / sum_b(f_b),   w = a:1 b:2 c:3 d:4
 The reported `score` is that WMB rescaled linearly onto 0-1 by (WMB - 1) / 3, so 0 = all
@@ -38,10 +34,11 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 COUNTS, OUT = ROOT / "data" / "counts", ROOT / "data" / "processed"
 DAYS = {"20260924": [5, 6, 7, 8], "20260926": [9, 10, 11, 12]}
+assert len(DAYS) == 2, "the screen has two replicate sorts"
 BINS, W = "abcd", np.array([1, 2, 3, 4])
 WMB_LO, WMB_HI = 1.0, 4.0          # bin-index bounds the raw WMB can take
 rescale = lambda v: (v - WMB_LO) / (WMB_HI - WMB_LO)
-CELLS = None  # e.g. {"20260922": [n_a, n_b, n_c, n_d], ...}; None = equal cells per bin
+CELLS = None  # e.g. {"20260924": [n_a, n_b, n_c, n_d], ...}; None = equal cells per bin
 MIN_READS = 50
 KEY = ["symbol", "BarcodeID", "transcript_id", "isoform", "Barcode"]
 

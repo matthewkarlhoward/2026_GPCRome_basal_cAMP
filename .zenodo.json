@@ -1,14 +1,14 @@
 {
   "upload_type": "software",
   "title": "GPCRome basal cAMP screen: processing, scoring and figure code",
-  "description": "<p>Code, processed data and figures for the basal cAMP GPCRome screen in Howard et al. 2026 &mdash; a pooled measurement of ligand-independent (basal) Gs/cAMP signalling across 946 barcoded human GPCR constructs in a HEK293T CRE&ndash;eGFP reporter line.</p><p>The repository is scoped to Figure 1 and Supplemental Figure 1 of the manuscript: the barcode-counting pipeline, the weighted-mean-bin scoring, the annotation tables those figures read, and the scripts that drew the panels. The five derived tables in <code>data/processed/</code> regenerate byte-identically from the per-barcode counts in <code>data/counts/</code> and the reference data shipped alongside them by running <code>run_all.sh</code>.</p><p>Third-party reference data redistributed under <code>data/external/</code> (Tedman et al. 2026, Nature Communications, DOI 10.1038/s41467-026-76564-7; GproteinDb/GPCRdb G-protein coupling table) is not covered by this record's licence and keeps its own licence and attribution, as documented in <code>data/external/README.md</code>.</p>",
+  "description": "<p>Code, processed data and figures for the basal cAMP GPCRome screen in Howard et al. 2026 &mdash; a pooled measurement of ligand-independent (basal) Gs/cAMP signalling across 946 barcoded human GPCR constructs in a HEK293T CRE&ndash;eGFP reporter line.</p><p>The repository is scoped to Figure 1, Supplemental Figures 1 and 2, and Supplemental Table 1 of the manuscript: the barcode-counting pipeline, the weighted-mean-bin scoring, the annotation tables those figures read, and the scripts that drew the panels. The six derived tables in <code>data/processed/</code> regenerate byte-identically from the per-barcode counts in <code>data/counts/</code> and the reference data shipped alongside them by running <code>run_all.sh</code>.</p><p>Third-party reference data redistributed under <code>data/external/</code> (Tedman et al. 2026, Nature Communications, DOI 10.1038/s41467-026-76564-7; GproteinDb/GPCRdb G-protein coupling table) is not covered by this record's licence and keeps its own licence and attribution, as documented in <code>data/external/README.md</code>.</p> Code in pipeline/ and scripts/ is MIT (LICENSE); the data, figures, tables and documentation are CC BY 4.0 (LICENSE-DATA). Third-party reference data under data/external/ keeps its own licence.",
   "creators": [
     {
       "name": "Howard, Matthew K.",
       "orcid": "0000-0002-2128-2065"
     }
   ],
-  "license": "mit",
+  "license": "cc-by-4.0",
   "access_right": "open",
   "keywords": [
     "GPCR",

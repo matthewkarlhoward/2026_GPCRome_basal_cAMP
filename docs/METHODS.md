@@ -15,20 +15,14 @@ Three sort days of four bins each were run, plus an unsorted baseline:
 
 | Day | Samples | Used |
 |---|---|---|
-| 20260922 | s1–s4 | **no** |
-| 20260924 | s5–s8 | yes (replicate 1) |
-| 20260926 | s9–s12 | yes (replicate 2) |
-| baseline | s13 | **no** — unsorted |
+| 20260924 | s5–s8 | replicate 1 |
+| 20260926 | s9–s12 | replicate 2 |
 
-**Day 1 was excluded** because its four bins had near-identical barcode composition — the
-sort did not separate cells. Its weighted mean bin correlated at r = −0.2 with the other
-two days and no relabelling of bins rescued it. Day 1 and the baseline also carry an
-off-library barcode (`TTTTGCGCTG`) absent from the 946-barcode reference and from every
-earlier run, at 9–45% of reads against index-hopping levels in s5–s12. Only the two
-retained replicates are included in this release; `docs/SEQUENCING_QC.md` records what was
-seen in the excluded samples.
+The screen has **two replicate sorts**, each four bins. A construct is scored only when it
+clears the read threshold in both, and `scripts/score_basal.py` asserts that the two days
+it reads are the two in the release.
 
-The bench sheet lists day 3 as 20240926; 2026 is assumed.
+
 
 ## Scoring
 
@@ -96,21 +90,74 @@ in the "rest" group inflates every value below by 0.05–0.08.
 (primary papers, structures or textbook-level), `reported`, `weak`, `none found` and
 `not assessed`.
 
-Of the top 40: 22 established, 7 reported, 2 weak/none, 9 not assessed; 23 carry a caveat.
-All 11 well-documented constitutively active orphan receptors land in the top 40: GPR6 (rank 1), GPR52 (7), GPR161 (9), GPR12 (10), GPR62 (12), GPR101 (22), GPR26 (28), ADGRG5 (29), GPR3 (30), GPR21 (33) and GPR61 (39). This is a different, larger set than the `ORPHAN` flag drawn in Figure 1c, which marks orphans among the top 30 only.
+Of the top 40: 22 established, 6 reported, 3 weak/none, 9 not assessed; 23 carry a caveat.
+One of the weak/none entries is a disagreement worth naming rather than burying: GLP1R
+scores at rank 35 here, but both studies that assayed it report no ligand-independent
+activity. Either the landing-pad expression level exceeds what those studies used, or the
+score is expression-driven (see confound 2 below). We have not resolved it.
+Eleven receptors that are constitutively active and have no well-established endogenous
+ligand land in the top 40: GPR6 (rank 1), GPR52 (7), GPR161 (9), GPR12 (10), GPR62 (12),
+GPR101 (22), GPR26 (28), ADGRG5 (29), GPR3 (30), GPR21 (33) and GPR61 (39). This is a
+looser set than the `ORPHAN` flag drawn in Figure 1c, and the two must not be conflated —
+see the reconciliation below.
+
+### Reconciling the Figure 1c keys with Supp. Table 1
+
+Three different counts of the same 30 receptors were in circulation; these are the ones to
+use. All are now printed by `scripts/make_supp_table.py`, which asserts them on every run.
+
+| Key in Figure 1c | Count | Definition |
+|---|---|---|
+| filled dot, "prior report" | 23 | `ca_evidence` is `established` (18) or `reported` (5) |
+| open dot, "weak or not assessed" | 7 | everything else: `not assessed` (6) plus GPR26, graded `weak` |
+| square, "orphan" | 8 | the curated `ORPHAN` set, mirrored into Supp. Table 1 as `orphan_curated` |
+| triangle, "agonist in situ" | 5 | the curated `AUTOCRINE` set, mirrored as `agonist_in_situ` |
+
+Two traps produced the earlier mismatched numbers:
+
+- **23 vs 24.** Counting "receptors with some prior claim" gives 24, because it folds in
+  GPR26, whose evidence is graded `weak`. The figure's filled dot is `established` +
+  `reported` only, so it is 23. The open dot was previously labelled "not assessed", which
+  was wrong for GPR26; it now reads "weak or not assessed".
+- **8 vs 9 orphans.** Two different routes both give 9, and neither matches the figure.
+  Counting `ligand_family == "orphan"` adds GPR4, which is annotated an orphan but is a
+  deorphanised proton sensor. Counting off the eleven-receptor list above adds ADGRG5,
+  an adhesion receptor activated by its own tethered Stachel agonist — constitutively
+  active, but not ligand-free. The figure excludes both, giving 8: GPR6, GPR52, GPR161,
+  GPR12, GPR62, GPR101, GPR26, GPR3.
+
+GPR4 therefore carries no flag in Figure 1c, although its pH caveat is real (its pH50 for
+cAMP is close to 8.0, so it is more than half maximally active at the assay pH). That
+caveat is carried in the text rather than in the panel.
 
 The two flags drawn in the panel mark receptors that need a caveat rather than hiding them:
 
-- **agonist in situ** — prostanoid and adenosine receptors, whose agonist these cells can
-  supply (medium is not exchanged for 24 h and HEK293T make PGE2/PGD2). PTGIR is the
-  internal control: same family, same transducer, comparable surface expression, rank 106,
-  and its synthase is absent from HEK293T. The effect is receptor-specific, not a blanket
-  artifact.
-- **orphan** — receptors with no known endogenous ligand.
+- **agonist in situ** — prostanoid and adenosine receptors, flagged because the medium is
+  not exchanged for 24 h and an accumulating endogenous agonist would be read as basal
+  activity. Treat this as a hypothesis we have not tested, not an established mechanism.
+  What the literature supports is only that HEK293 cells carry endogenous prostanoid and
+  adenosine receptors (Atwood et al. 2011, PMID 21549011; endogenous functional A2B is
+  well documented). No primary study shows HEK293 releasing prostaglandin at a
+  concentration that would activate a transfected prostanoid receptor, and the indirect
+  evidence runs the other way — these cells need exogenous arachidonic acid to make
+  prostaglandins. Adenosine concentration in conditioned medium has likewise not been
+  measured here. Settling it requires one experiment: score these receptors in medium
+  exchanged immediately before the sort, or with a COX inhibitor / adenosine deaminase in
+  the medium. PTGIR sits at rank 106 — same family, same transducer, comparable surface
+  expression — which is consistent with the effect being receptor-specific rather than a
+  blanket artifact, though the usual explanation for it (prostacyclin synthase absent from
+  HEK293T) is `[CONFIRM]` and not yet checked against an expression dataset.
+- **orphan** — receptors with no known endogenous ligand, by the curated `ORPHAN` set
+  rather than the `ligand_family` column; 8 of the top 30.
 
-Secretin-family class B receptors (GIPR, VIPR2, PTH1R, PTH2R, SCTR, GLP1R, GHRHR) show
-ligand-independent cAMP in proportion to expression level and should be read with that in
-mind.
+Several secretin-family class B receptors show ligand-independent cAMP in proportion to
+expression level, and any class B score here should be read with that in mind. The
+documented cases are PTH1R and GCGR, whose basal cAMP tracks cDNA dose (Chen et al. 1999,
+PMID 10051581), and GIPR, whose basal cAMP tracks surface expression in HEK293 (Fortin et
+al. 2010, PMID 20605968). **GLP1R is not one of them** — both studies that tested it found
+no ligand-independent activity, so it must not be carried along in a blanket statement.
+VIPR2, PTH2R, SCTR and GHRHR were not tested in either study; they are flagged here by
+family membership alone.
 
 ## Three things to know before reusing these scores
 

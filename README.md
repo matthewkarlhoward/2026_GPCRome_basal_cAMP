@@ -15,16 +15,18 @@ basal activity is the **weighted mean bin** of its barcode across those bins, re
 
 ```
 pipeline/     FASTQ -> per-barcode counts (fastp, cutadapt, count_barcodes.py)
-scripts/      five table builders, three figure scripts, one style module
-data/         counts, sort QC, six derived tables, library and reference annotation
-figures/      the panels of Figure 1 and Supplemental Figure 1, as .pdf and .png
+scripts/      six table builders, four figure scripts, a supplemental-table
+              writer, one style module
+data/         counts, sort QC, seven processed tables, library and reference annotation
+figures/      the panels of Figure 1 and Supplemental Figures 1-2, as .pdf and .png
+tables/       Supplemental Table 1
 docs/         methods and caveats, sequencing QC, panel -> script map
 ```
 
 - **[`docs/FIGURE_MAP.md`](docs/FIGURE_MAP.md)** — which script drew which panel.
-- **[`docs/METHODS.md`](docs/METHODS.md)** — how the scores are computed, which sort day
-  was excluded and why, and the three confounds to know about before reusing them. Read it
-  before quoting any number from here.
+- **[`docs/METHODS.md`](docs/METHODS.md)** — how the scores are computed and the three
+  confounds to know about before reusing them. Read it before quoting any number from
+  here.
 
 Cartoons (Figure 1a) were drawn by hand and the FACS gating plots (Supplemental Figure 1a)
 were exported from FlowJo; neither is produced here.
@@ -44,9 +46,9 @@ bash run_all.sh          # or: PY=python3 bash run_all.sh
 The scripts are run through `$PY`, which defaults to `python`; set it if your
 interpreter is `python3`.
 
-The **five derived tables** in `data/processed/` regenerate byte-identically from
+The **six derived tables** in `data/processed/` regenerate byte-identically from
 `data/counts/` plus the reference data under `data/external/`, `data/inhouse/` and
-`data/library/`. The sixth file there, `literature_constitutive_activity.csv`, is a
+`data/library/`. The seventh file there, `literature_constitutive_activity.csv`, is a
 hand-curated **input** that nothing regenerates — do not delete it.
 
 | Step | Script | Writes |
@@ -56,13 +58,17 @@ hand-curated **input** that nothing regenerates — do not delete it.
 | 3 | `scripts/build_ranked_tables.py` | `canonical_scores_ranked.csv` |
 | 4 | `scripts/build_construct_features.py` | `receptor_construct_features.csv` |
 | 5 | `scripts/build_surface_join.py` | `basal_vs_tedman_pme.csv` |
-| 6 | `scripts/plot_figure1.py` | **Figure 1b–e** |
-| 7 | `scripts/plot_qc_panels.py` | **Supplemental Figure 1b–e** |
-| 8 | `scripts/plot_surface_vs_basal.py` | **Supplemental Figure 1f** |
+| 6 | `scripts/build_isoform_table.py` | `alt_vs_canonical_isoform.csv` |
+| 7 | `scripts/plot_figure1.py` | **Figure 1b–e** |
+| 8 | `scripts/plot_qc_panels.py` | **Supplemental Figure 1b–e** |
+| 9 | `scripts/plot_surface_vs_basal.py` | **Supplemental Figure 1f** |
+| 10 | `scripts/plot_isoform_vignettes.py` | **Supplemental Figure 2** |
+| 11 | `scripts/make_supp_table.py` | **Supplemental Table 1** |
 
-Steps 1–5 build tables and draw nothing; steps 6–8 draw and write nothing. Besides the
-published panels, step 6 also emits `F1_main_canonical` (a canonical-only variant of panel
-b that was not used) and step 7 `Q_qc_strip` (panels b–e pre-arranged as one strip).
+Steps 1–6 build tables and draw nothing; steps 7–10 draw and write nothing; step 11
+writes `tables/supp_table1_GPCRome_basal.csv` and draws nothing. Besides the
+published panels, step 7 also emits `F1_main_canonical` (a canonical-only variant of panel
+b that was not used) and step 8 `Q_qc_strip` (panels b–e pre-arranged as one strip).
 
 ### From raw reads
 

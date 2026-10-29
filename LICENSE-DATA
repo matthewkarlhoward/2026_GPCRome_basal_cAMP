@@ -1,0 +1,24 @@
+All content in this repository that is not source code — the data files under
+data/, the figures under figures/, the tables under tables/, the documentation
+under docs/, and the top-level README and metadata files — is released under the
+Creative Commons Attribution 4.0 International licence (CC BY 4.0).
+
+    Copyright (c) 2026 Matthew K. Howard
+    https://creativecommons.org/licenses/by/4.0/
+
+You are free to share and adapt these files for any purpose, including
+commercially, provided you give appropriate credit, link to the licence, and
+indicate if changes were made. Please cite the accompanying paper.
+
+Source code in pipeline/ and scripts/ is published by the same copyright holder
+under the MIT licence instead — see LICENSE.
+
+Third-party content, which this copyright does NOT cover:
+
+  * data/external/ is third-party reference data and keeps its own licence and
+    attribution. See data/external/README.md. It holds the GPCR-G protein
+    coupling table from GproteinDB and the surface-expression supplement from
+    Tedman et al. 2026, both CC BY 4.0 and both requiring attribution to their
+    own authors.
+  * data/library/gpcrome_library.csv describes a plasmid library that was a gift
+    from the Schlebach lab; the construct sequences originate there.

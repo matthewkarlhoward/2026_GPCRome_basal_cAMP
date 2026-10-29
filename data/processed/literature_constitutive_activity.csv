@@ -23,13 +23,13 @@ MC5R,reported,constitutive activity reported,,melanocortin literature
 DRD5,established,higher constitutive activity than D1; matches DRD5 > DRD1 in this screen,,dopamine receptor literature
 DRD1,reported,lower constitutive activity than D5,,dopamine receptor literature
 HTR2A,established,constitutive activity well documented; pimavanserin is an inverse agonist,Gq-coupled - should not drive a Gs/cAMP reporter directly,serotonin receptor literature
-PTH1R,established,activating mutations cause Jansen metaphyseal chondrodysplasia,class B; basal cAMP rises with expression level,class B GPCR literature
-GIPR,reported,ligand-independent cAMP reported,class B; basal cAMP rises with expression level,class B GPCR literature
-GLP1R,reported,constitutive activity reported,class B; basal cAMP rises with expression level,class B GPCR literature
-VIPR2,not assessed,,class B; basal cAMP rises with expression level,
-PTH2R,not assessed,,class B; basal cAMP rises with expression level,
-SCTR,not assessed,,class B; basal cAMP rises with expression level,
-GHRHR,not assessed,,class B; basal cAMP rises with expression level,
+PTH1R,established,activating mutations cause Jansen metaphyseal chondrodysplasia,class B; basal cAMP rises with expression level (shown for this receptor),PMID 10051581
+GIPR,reported,ligand-independent cAMP reported,class B; basal cAMP rises with expression level (shown for this receptor),PMID 20605968
+GLP1R,none found,tested negative - no ligand-independent cAMP in either study that assayed it,"class B, but explicitly NOT constitutively active; do not carry it in a blanket class B statement",PMID 10051581; PMID 20605968
+VIPR2,not assessed,,class B; flagged by family membership only - ligand-independent cAMP was not tested for this receptor,
+PTH2R,not assessed,,class B; flagged by family membership only - ligand-independent cAMP was not tested for this receptor,
+SCTR,not assessed,,class B; flagged by family membership only - ligand-independent cAMP was not tested for this receptor,
+GHRHR,not assessed,,class B; flagged by family membership only - ligand-independent cAMP was not tested for this receptor,
 ADORA2A,established,constitutive activity documented,HEK293 release adenosine - autocrine activation not excluded,adenosine receptor literature
 ADORA2B,reported,constitutive activity reported,HEK293 release adenosine - autocrine activation not excluded,adenosine receptor literature
 PTGER2,not assessed,,HEK293 make prostaglandins (COX); autocrine PGE2 not excluded,

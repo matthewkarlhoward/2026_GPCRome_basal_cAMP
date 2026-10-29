@@ -1,7 +1,7 @@
 rank,symbol,coupling,score,score_sd,total_reads,low_depth,ca_evidence,ca_mechanism,ca_caveat,ca_source,transcript_id,Barcode,gs_primary,gs_any
 1,GPR6,Gs + other,0.9559,0.01512,43198,False,established,GPR3/6/12 family; ligand-independent cAMP comparable to a fully activated GPCR,,PMC4575141; PMC8065388,ENST00000275169,GTGTAGGAAC,True,True
-2,GIPR,Gs only,0.9459,0.02844,54930,False,reported,ligand-independent cAMP reported,class B; basal cAMP rises with expression level,class B GPCR literature,ENST00000590918,GTCTGTGGAA,True,True
-3,VIPR2,Gs only,0.9426,0.008078,41370,False,not assessed,,class B; basal cAMP rises with expression level,,ENST00000262178,TATCGCTGTA,True,True
+2,GIPR,Gs only,0.9459,0.02844,54930,False,reported,ligand-independent cAMP reported,class B; basal cAMP rises with expression level (shown for this receptor),PMID 20605968,ENST00000590918,GTCTGTGGAA,True,True
+3,VIPR2,Gs only,0.9426,0.008078,41370,False,not assessed,,class B; flagged by family membership only - ligand-independent cAMP was not tested for this receptor,,ENST00000262178,TATCGCTGTA,True,True
 4,PTGDR,Gs only,0.9425,0.01355,24871,False,not assessed,,HEK293 make prostaglandins (COX); autocrine PGD2 not excluded,,ENST00000306051,AAGCCATAGT,True,True
 5,PTGER4,Gs only,0.9383,0.0208,37703,False,not assessed,,HEK293 make prostaglandins (COX); autocrine PGE2 not excluded,,ENST00000302472,GGAGAGGCAT,True,True
 6,HTR6,Gs only,0.9371,0.02085,28070,False,established,high constitutive activity; inverse agonists well characterized,,textbook aminergic constitutive activity,ENST00000289753,CCGATAGCAG,True,True
@@ -15,15 +15,15 @@ rank,symbol,coupling,score,score_sd,total_reads,low_depth,ca_evidence,ca_mechani
 14,GPR119,Gs only,0.8849,0.0439,13463,False,reported,constitutive activity reported; lipid (OEA) sensor,endogenous lipid ligand not excluded,lipid receptor literature,ENST00000276218,CGAAGAAGGC,True,True
 15,HTR7,Gs only,0.8799,0.1424,32121,False,established,constitutive activity documented,,textbook aminergic constitutive activity,ENST00000336152,TCAGTTGAGC,True,True
 16,HRH2,Gs secondary,0.8634,0.01726,28882,False,established,constitutive activity well documented,,textbook aminergic constitutive activity,ENST00000624694,TAAGTCCTGT,False,True
-17,PTH1R,Gs only,0.8631,0.0705,10581,False,established,activating mutations cause Jansen metaphyseal chondrodysplasia,class B; basal cAMP rises with expression level,class B GPCR literature,ENST00000313049,TTGTGCGGAC,True,True
-18,PTH2R,Gs only,0.8498,0.03846,30692,False,not assessed,,class B; basal cAMP rises with expression level,,ENST00000272847,ACACCAACAC,True,True
+17,PTH1R,Gs only,0.8631,0.0705,10581,False,established,activating mutations cause Jansen metaphyseal chondrodysplasia,class B; basal cAMP rises with expression level (shown for this receptor),PMID 10051581,ENST00000313049,TTGTGCGGAC,True,True
+18,PTH2R,Gs only,0.8498,0.03846,30692,False,not assessed,,class B; flagged by family membership only - ligand-independent cAMP was not tested for this receptor,,ENST00000272847,ACACCAACAC,True,True
 19,ADRB1,Gs only,0.8472,0.02599,37459,False,established,constitutive activity documented,,textbook aminergic constitutive activity,ENST00000369295,TCATCCTGTC,True,True
 20,DRD5,Gs only,0.8357,0.0263,20591,False,established,higher constitutive activity than D1; matches DRD5 > DRD1 in this screen,,dopamine receptor literature,ENST00000304374,CTGAAGTCTC,True,True
 21,MC5R,Gs only,0.8311,0.06436,22541,False,reported,constitutive activity reported,,melanocortin literature,ENST00000324750,CCGTCTGCTA,True,True
 22,GPR101,Gs only,0.8188,0.06917,18237,False,established,constitutive Gs; duplication causes X-linked acrogigantism,also couples Gq/11 and G12/13,cryo-EM 8W8R,ENST00000651716,TTCAGGTCAA,True,True
 23,ADORA2A,Gs only,0.807,0.003669,34757,False,established,constitutive activity documented,HEK293 release adenosine - autocrine activation not excluded,adenosine receptor literature,ENST00000618076,TGTAGGCGGT,True,True
 24,ADORA2B,Gs only,0.7951,0.0528,33607,False,reported,constitutive activity reported,HEK293 release adenosine - autocrine activation not excluded,adenosine receptor literature,ENST00000304222,GTAAGGATAC,True,True
-25,SCTR,Gs only,0.7864,0.04655,44188,False,not assessed,,class B; basal cAMP rises with expression level,,ENST00000019103,ACGGCTTCTC,True,True
+25,SCTR,Gs only,0.7864,0.04655,44188,False,not assessed,,class B; flagged by family membership only - ligand-independent cAMP was not tested for this receptor,,ENST00000019103,ACGGCTTCTC,True,True
 26,GPR4,Gs + other,0.7826,0.1169,172,True,established,highly constitutively active at neutral pH when overexpressed in HEK293,proton sensor; activity is pH-dependent by design,PMC6063991,ENST00000323040,CAACAACTCG,True,True
 27,DRD1,Gs only,0.7816,0.05934,22804,False,reported,lower constitutive activity than D5,,dopamine receptor literature,ENST00000393752,AGAGGAGAAC,True,True
 28,GPR26,Gs only,0.7797,0.0659,28812,False,weak,2015 orphan class-A screen; no clear cAMP elevation shown,Gs claim rests largely on vendor annotation,PMC4575141,ENST00000284674,TTGGAGTTCG,True,True
@@ -33,10 +33,10 @@ rank,symbol,coupling,score,score_sd,total_reads,low_depth,ca_evidence,ca_mechani
 32,HTR2A,Gq,0.7517,0.04922,36977,False,established,constitutive activity well documented; pimavanserin is an inverse agonist,Gq-coupled - should not drive a Gs/cAMP reporter directly,serotonin receptor literature,ENST00000542664,GGTAAGCAAG,False,False
 33,GPR21,unassigned,0.7443,0.04267,2474,False,established,agonist-like motif in ECL2 occupies the orthosteric pocket; basal activity comparable to GPR52,,Nat Commun 2023 s41467-023-35882-w,ENST00000616002,TCTTACACTC,False,False
 34,ADRB3,Gs only,0.7401,0.007495,84583,False,reported,constitutive activity reported,,textbook aminergic constitutive activity,ENST00000345060,GGTGGTAACT,True,True
-35,GLP1R,Gs only,0.7387,0.009873,71485,False,reported,constitutive activity reported,class B; basal cAMP rises with expression level,class B GPCR literature,ENST00000373256,ATACACCACA,True,True
+35,GLP1R,Gs only,0.7387,0.009873,71485,False,none found,tested negative - no ligand-independent cAMP in either study that assayed it,"class B, but explicitly NOT constitutively active; do not carry it in a blanket class B statement",PMID 10051581; PMID 20605968,ENST00000373256,ATACACCACA,True,True
 36,GPBAR1,Gs only,0.7354,0.01635,22822,False,not assessed,,bile acids in serum not excluded,,ENST00000521462,CAGGCGAACT,True,True
 37,P2RY1,Gq,0.733,0.04219,19904,False,not assessed,,Gq-coupled; cells release ATP - autocrine activation not excluded,,ENST00000305097,CACATCCTAA,False,False
-38,GHRHR,Gs only,0.732,0.0007366,48923,False,not assessed,,class B; basal cAMP rises with expression level,,ENST00000326139,AGCCGATAGA,True,True
+38,GHRHR,Gs only,0.732,0.0007366,48923,False,not assessed,,class B; flagged by family membership only - ligand-independent cAMP was not tested for this receptor,,ENST00000326139,AGCCGATAGA,True,True
 39,GPR61,Gs only,0.732,0.02599,38749,False,established,cryo-EM with Gs and no exogenous ligand; grouped with GPR161/GPR174 as raising cAMP like activated D1R,,PMC5566548,ENST00000616874,CCGCTAATCT,True,True
 40,GPR15,Gi,0.728,0.0117,64912,False,none found,,annotated Gi - a Gi receptor should lower not raise cAMP; unexpected hit,,ENST00000284311,ACCAGCAGTC,False,False
 41,OPN3,unassigned,0.7272,0.02157,13529,False,not reviewed,,,,ENST00000366554,CGACTTGCTC,False,False

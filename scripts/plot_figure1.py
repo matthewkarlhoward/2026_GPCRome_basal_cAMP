@@ -41,12 +41,14 @@ COUP_ORDER = ["Gs only", "Gs + other", "Gs secondary", "Gq", "Gi", "multi (no Gs
               "Golf", "gustducin", "unassigned"]
 AUTOCRINE = {"PTGDR", "PTGER2", "PTGER4", "PTGIR", "ADORA2A", "ADORA2B",
              "GPBAR1", "P2RY1", "P2RY2", "S1PR1", "FFAR4"}
-CLASS_B = {"GIPR", "VIPR2", "PTH1R", "PTH2R", "SCTR", "GLP1R", "GHRHR", "CALCR",
-           "ADCYAP1R1"}
 # evidence strength is not a distinction this figure needs to draw
 FILL = {"established": S.BLACK, "reported": S.BLACK}
-# curated: the ligand_family column lists GPR4 as an orphan, but it is a proton-sensing
-# receptor (deorphanised), so it is excluded here
+# Curated orphan set -- the authority for the orphan flag and count, in this figure and
+# in Supp. Table 1 (column `orphan_curated`). It deliberately differs from the
+# `ligand_family` annotation on one receptor in the top 30: GPR4 is `ligand_family =
+# orphan` there but is a deorphanised proton sensor, so it is not an orphan here. Counting
+# orphans off `ligand_family` instead gives 9 and does not match the figure.
+# make_supp_table.py holds the same two sets and asserts the counts agree.
 ORPHAN = {"GPR6", "GPR52", "GPR161", "GPR12", "GPR62", "GPR101", "GPR26", "GPR3",
           "GPR21", "GPR61", "GPR85", "GPR173"}
 N_TOP = 30
@@ -78,18 +80,16 @@ def draw_cartoon_slot(fig, ax):
 
 
 # ------------------------------------------------------------------ panel b --
-def draw_waterfall(fig, ax, d, med, with_isoforms):
+def draw_waterfall(fig, ax, d, with_isoforms):
     d = d.sort_values("score", ascending=False).reset_index(drop=True)
     y = np.arange(len(d))
-    ax.barh(y, d["score"] - med, left=med, height=1.0, linewidth=0,
+    ax.barh(y, d["score"], height=1.0, linewidth=0,
             color=d["coupling"].map(COUP_C))
-    ax.axvline(med, c=S.BLACK, lw=0.5)
     ax.invert_yaxis()
     n = len(d)
     ylab = f"Receptor rank (n = {n})"
     ax.set(xlim=(0, 1.0), xticks=[0, 0.25, 0.5, 0.75, 1.0], ylim=(n, -n * 0.012),
            xlabel="Basal cAMP score", ylabel=ylab)
-    # the median line is self-evident; its value belongs in the legend, not on the bars
     handles = [Line2D([], [], ls="", marker="s", ms=2.4, c=COUP_C[k], label=k)
                for k in COUP_ORDER]
     ax.legend(handles=handles, loc="lower right", bbox_to_anchor=(1.12, 0.02), ncol=1,
@@ -170,12 +170,15 @@ def draw_top30(fig, ax, can, med):
 
     bb = ax.get_position()
 
+    # the filled dot is established+reported. The open dot is everything else, which in
+    # the top 30 is 6 never assessed plus GPR26 graded weak -- so it cannot be labelled
+    # "not assessed" alone. Supp. Table 1 carries the full four-way grade per receptor.
     n_rep = int(t["ca_evidence"].isin(["established", "reported"]).sum())
     evidence = [
         Line2D([], [], ls="", marker="o", ms=2.6, mfc=S.BLACK, mec=S.BLACK, mew=0.5,
-               label=f"reported constitutive ({n_rep})"),
+               label=f"prior report ({n_rep})"),
         Line2D([], [], ls="", marker="o", ms=2.6, mfc=S.WHITE, mec=S.BLACK, mew=0.5,
-               label=f"not assessed ({N_TOP - n_rep})"),
+               label=f"weak or not assessed ({N_TOP - n_rep})"),
     ]
     flags = [
         Line2D([], [], ls="", marker="s", ms=2.2, c=S.GREY1,
@@ -214,7 +217,7 @@ def build(with_isoforms, can, bar, feat):
 
     src = bar if with_isoforms else can
     wmed = src["score"].median()
-    draw_waterfall(fig, ax_b, src, wmed, with_isoforms)
+    draw_waterfall(fig, ax_b, src, with_isoforms)
     draw_coupling(fig, ax_d, can, med)
     draw_ligand(fig, ax_e, can, feat)
     keys = draw_top30(fig, ax_c, can, med)

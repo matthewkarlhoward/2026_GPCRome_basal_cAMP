@@ -4,7 +4,7 @@ Cartoons (Figure 1a) were drawn by hand and FACS gating plots (Supplemental Figu
 exported from FlowJo. Neither is produced by this repository. Everything else below is.
 
 Panels were emitted as vector PDFs and arranged in Illustrator; nothing was resized or
-restyled after export, so the font sizes and line weights in `scripts/gpr161_style.py`
+restyled after export, so the font sizes and line weights in `scripts/figure_style.py`
 (Helvetica, 6 pt, 0.5 pt rules) are the published ones.
 
 ## Figure 1 — the basal GPCRome screen
@@ -37,7 +37,7 @@ c–e are canonical-only in both.
 
 ## The tables behind them
 
-Five scripts build the tables the panels read. None of them plots anything.
+Six scripts build the tables the panels read. None of them plots anything.
 
 | Script | Table it writes | Panel that needs it |
 |---|---|---|
@@ -45,9 +45,30 @@ Five scripts build the tables the panels read. None of them plots anything.
 | `build_coupling.py` | `coupling_annotation.csv` | Fig 1b, 1d, Supp 1c, 1f |
 | `build_ranked_tables.py` | `canonical_scores_ranked.csv` | Fig 1b–e |
 | `build_construct_features.py` | `receptor_construct_features.csv` | Fig 1e |
-| `build_surface_join.py` | `basal_vs_tedman_pme.csv` | Supp 1f |
+| `build_surface_join.py` | `basal_vs_tedman_pme.csv` | Supp 1f, Supp 2c,e |
+| `build_isoform_table.py` | `alt_vs_canonical_isoform.csv` | Supp 2a–c,e |
 
 The last three were extracted verbatim from the larger exploratory scripts that originally
 wrote these tables (`plot_basal.py`, `plot_class_features.py`, `plot_basal_vs_tedman.py`).
 Their output is byte-identical; the plotting code those scripts carried is not part of
 this release.
+
+## Supplemental Figure 2 — isoform vignettes
+
+`scripts/plot_isoform_vignettes.py` → `figures/S2_isoform_vignettes.pdf`, **165 × 88 mm**.
+
+| panel | content |
+|---|---|
+| **a** | every alternative isoform against its canonical construct, the two vignettes marked |
+| **b**, **c** | GPR161 isoform architecture; basal cAMP against surface expression |
+| **d**, **e** | the same two for ADORA2A |
+
+Architecture is translated from the ATG-HA start and each isoform aligned to its canonical
+by the longest shared N- and C-terminal run; lengths are reported natively, with the
+10-residue Met + HA tag removed.
+
+## Supplemental Table 1 — the scored library
+
+`scripts/make_supp_table.py` → `tables/supp_table1_GPCRome_basal.csv`, 946 constructs ×
+25 columns. It asserts the Figure 1c counts (23 with a prior report, 8 orphans) on every
+run, so the table and the panel cannot drift apart.

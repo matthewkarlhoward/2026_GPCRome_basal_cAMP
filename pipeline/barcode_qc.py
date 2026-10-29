@@ -23,7 +23,7 @@ import pandas as pd
 from Bio.SeqIO.QualityIO import FastqGeneralIterator
 
 TOOL, OUT = sys.argv[1], sys.argv[2]
-SAMPLES = [f"s{i}_basal_S{i}" for i in range(1, 13)] + ["s13_baseline_S13"]
+SAMPLES = [f"s{i}_basal_S{i}" for i in range(5, 13)]   # the two replicate sorts
 LUT = np.zeros(256, dtype=np.uint8)
 for i, c in enumerate("ACGTN"):
     LUT[ord(c)] = i

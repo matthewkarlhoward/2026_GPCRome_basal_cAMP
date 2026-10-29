@@ -2,6 +2,11 @@
 
 FASTQ → per-barcode counts. This is what produced `../data/counts/`.
 
+Raw FASTQ files are deposited in the NCBI Sequence Read Archive under BioProject
+**PRJNA1551037** ("GPCRome basal cAMP signaling screen", 8 runs, submission
+SUB16589998, processed 2026-10-27). The FASTQ themselves are not committed here;
+`data/counts/` is the first committed artefact.
+
 ```bash
 bash process_one.sh <sample>_R1_001.fastq.gz          # one sample; R2 is derived
 bash run_paired.sh  <dir-of-per-sample-folders>       # the whole run
@@ -32,8 +37,12 @@ are those files.
 
 Match rate on the retained samples is 93–96% of trimmed reads. One mismatch is
 unambiguous: the closest pair of reference barcodes is 4 mismatches apart and no read in
-this run was 1 mismatch from two barcodes. `barcode_qc.py` produced the tables in
-`../data/qc/`; see `../docs/SEQUENCING_QC.md`.
+this run was 1 mismatch from two barcodes. `barcode_qc.py` wrote `qc_summary.csv` in
+`../data/qc/`; see `../docs/SEQUENCING_QC.md`. The other table there,
+`read_fate.csv`, records how many reads survived each stage per sample. Its `raw` and
+`trimmed` columns match `qc_summary.csv`, its `library` column is the summed counts in
+`../data/counts/`, and `other_unmatched` is the remainder; only `contaminant` comes from
+the counting run and is not derivable from the deposited files.
 
 ## Reference files
 

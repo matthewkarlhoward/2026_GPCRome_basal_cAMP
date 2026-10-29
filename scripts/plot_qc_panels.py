@@ -9,9 +9,7 @@
 Reads: data/processed/basal_scores_per_barcode.csv, coupling_annotation.csv,
        data/qc/read_fate.csv
 
-Only the two retained sort days are shown. The excluded first day (20260922) and the
-unsorted baseline (s13) are not plotted anywhere here, so "replicate 1" and "replicate 2"
-below are 09/24 and 09/26.
+The two replicate sorts, 09/24 and 09/26, are "replicate 1" and "replicate 2" below.
 
 Q2 shows that olfactory receptors are not evenly spread through the coverage
 distribution. They are 40% of the scored library but 82% of the
