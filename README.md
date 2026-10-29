@@ -97,7 +97,7 @@ latest one.
 | | DOI |
 |---|---|
 | **Cite this** — all versions, always resolves to the latest | [10.5281/zenodo.23682602](https://doi.org/10.5281/zenodo.23682602) |
-| latest version only (v1.0.1), pinned to that exact snapshot | [10.5281/zenodo.23682684](https://doi.org/10.5281/zenodo.23682684) |
+| latest version only (v1.1.0), pinned to that exact snapshot | [10.5281/zenodo.23754403](https://doi.org/10.5281/zenodo.23754403) |
 
 Every earlier version keeps its own DOI and stays resolvable; they are listed on the
 Zenodo record under *Versions*.
