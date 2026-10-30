@@ -2,14 +2,23 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23682602.svg)](https://doi.org/10.5281/zenodo.23682602)
 
-Code, processed data and figures for the basal cAMP GPCRome screen in **Howard et al.
-2026** — a pooled measurement of **ligand-independent (basal) Gs/cAMP signalling across
-946 barcoded human GPCR constructs**.
+**Mapping the sequence determinants of constitutive activity in GPCRs.**
+Howard MK, Whiteman S, Rockefeller Grimes P, Macdonald C, Manglik A &
+Coyote-Maestas W (2026).
+[Read the paper](https://matthewkhoward.com/Howard_2026_GPR161_constitutive_activity.pdf) (PDF).
+
+Code, processed data and figures for the basal cAMP GPCRome screen in that paper — a
+pooled measurement of **ligand-independent (basal) Gs/cAMP signalling across 946 barcoded
+human GPCR constructs**.
 
 A barcoded GPCRome library is integrated into a HEK293T CRE–eGFP reporter line, grown
 without added agonist, and sorted into four bins of reporter fluorescence. Each construct's
 basal activity is the **weighted mean bin** of its barcode across those bins, rescaled to
 0–1. Higher score = more cAMP with no agonist present.
+
+> **Scope.** This repository carries the pooled GPCRome screen. The GPR161 deep
+> mutational scan that accompanies this work has its own repository:
+> <https://github.com/matthewkarlhoward/2026_GPR161_mutational_scan>.
 
 **Correspondence:** Matthew K. Howard, <matthewkarlhoward@gmail.com>
 
@@ -40,17 +49,6 @@ were exported from FlowJo; neither is produced here.
 | **Raw sequencing reads** | NCBI SRA, BioProject [PRJNA1551037](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1551037) — 8 runs. Not committed here; `data/counts/` is the first committed artefact. |
 | **Basal cAMP scores** | `tables/supp_table1_GPCRome_basal.csv` — all 946 constructs, one row each, which is Supplemental Table 1 of the paper. Per-barcode and ranked-canonical forms are in `data/processed/`. |
 | **Code, counts, processed tables, figures** | this repository, archived on Zenodo at [10.5281/zenodo.23682602](https://doi.org/10.5281/zenodo.23682602) |
-
-**There is no MaveDB deposit for this screen**, so do not go looking for one. MaveDB
-holds variant effect maps of a single target; this screen scores whole receptors — 946
-barcodes over 766 distinct UniProt accessions, one score per construct rather than per
-variant. The GPR161 deep mutational scan that accompanies this work does have one:
-experiment set
-[urn:mavedb:00001323](https://www.mavedb.org/experiment-sets/urn:mavedb:00001323), with
-code and counts at
-<https://github.com/matthewkarlhoward/2026_GPR161_mutational_scan> and
-[10.5281/zenodo.23682577](https://doi.org/10.5281/zenodo.23682577). Its raw reads are
-BioProject [PRJNA1551518](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1551518).
 
 ---
 
