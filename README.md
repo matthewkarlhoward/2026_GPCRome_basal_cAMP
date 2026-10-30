@@ -33,10 +33,31 @@ were exported from FlowJo; neither is produced here.
 
 ---
 
+## Data availability
+
+| what | where |
+|---|---|
+| **Raw sequencing reads** | NCBI SRA, BioProject [PRJNA1551037](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1551037) — 8 runs. Not committed here; `data/counts/` is the first committed artefact. |
+| **Basal cAMP scores** | `tables/supp_table1_GPCRome_basal.csv` — all 946 constructs, one row each, which is Supplemental Table 1 of the paper. Per-barcode and ranked-canonical forms are in `data/processed/`. |
+| **Code, counts, processed tables, figures** | this repository, archived on Zenodo at [10.5281/zenodo.23682602](https://doi.org/10.5281/zenodo.23682602) |
+
+**There is no MaveDB deposit for this screen**, so do not go looking for one. MaveDB
+holds variant effect maps of a single target; this screen scores whole receptors — 946
+barcodes over 766 distinct UniProt accessions, one score per construct rather than per
+variant. The GPR161 deep mutational scan that accompanies this work does have one:
+experiment set
+[urn:mavedb:00001323](https://www.mavedb.org/experiment-sets/urn:mavedb:00001323), with
+code and counts at
+<https://github.com/matthewkarlhoward/2026_GPR161_mutational_scan> and
+[10.5281/zenodo.23682577](https://doi.org/10.5281/zenodo.23682577). Its raw reads are
+BioProject [PRJNA1551518](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1551518).
+
+---
+
 ## Reproducing the figures
 
-Raw FASTQs are deposited separately (see the manuscript's data-availability statement);
-`data/counts/` is the output of `pipeline/` and is the entry point for everything else.
+`data/counts/` is the output of `pipeline/` and is the entry point for everything else;
+the FASTQ behind it are in the SRA, not here.
 
 ```bash
 pip install -r requirements.txt

@@ -21,6 +21,9 @@ identifiers:
   - type: doi
     value: "10.5281/zenodo.23755955"
     description: "Version DOI for v3.0.0"
+  - type: url
+    value: "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1551037"
+    description: "NCBI BioProject - the raw sequencing reads behind data/counts/"
 # 3.0.0 is the version submitted with the manuscript, and is shared with the companion
 # repository 2026_GPR161_mutational_scan
 version: "3.0.0"

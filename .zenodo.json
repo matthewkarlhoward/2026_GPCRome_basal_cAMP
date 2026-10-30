@@ -24,6 +24,21 @@
   ],
   "related_identifiers": [
     {
+      "identifier": "https://github.com/matthewkarlhoward/2026_GPCRome_basal_cAMP",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://www.ncbi.nlm.nih.gov/bioproject/PRJNA1551037",
+      "relation": "isSupplementTo",
+      "resource_type": "dataset"
+    },
+    {
+      "identifier": "https://doi.org/10.5281/zenodo.23682577",
+      "relation": "references",
+      "resource_type": "software"
+    },
+    {
       "identifier": "https://doi.org/10.1038/s41467-026-76564-7",
       "relation": "references",
       "resource_type": "publication-article"
