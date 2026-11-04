@@ -38,3 +38,31 @@ keywords:
   - cAMP
   - GPCRome
   - pooled screen
+
+# What GitHub's "Cite this repository" button offers. With this block it returns
+# the PAPER; the software entry above, and its Zenodo DOIs under `identifiers`,
+# are what to cite for the code and data archive instead. CFF 1.2.0 has no
+# `preprint` reference type, so this is `article` with bioRxiv as the journal.
+preferred-citation:
+  type: article
+  title: "Mapping the sequence determinants of constitutive activity in GPCRs"
+  authors:
+    - family-names: Howard
+      given-names: "Matthew K."
+      orcid: "https://orcid.org/0000-0002-2128-2065"
+    - family-names: Whiteman
+      given-names: Sara
+    - family-names: "Rockefeller Grimes"
+      given-names: Patrick
+    - family-names: Macdonald
+      given-names: "Christian B."
+    - family-names: Manglik
+      given-names: Aashish
+    - family-names: "Coyote-Maestas"
+      given-names: Willow
+  journal: bioRxiv
+  year: 2026
+  month: 11
+  doi: "10.64898/2026.10.30.762644"
+  url: "https://www.biorxiv.org/content/10.64898/2026.10.30.762644v1"
+  notes: "Preprint, posted 2026-11-03."
