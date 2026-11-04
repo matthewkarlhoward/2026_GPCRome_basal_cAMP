@@ -3,9 +3,10 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23682602.svg)](https://doi.org/10.5281/zenodo.23682602)
 
 **Mapping the sequence determinants of constitutive activity in GPCRs.**
-Howard MK, Whiteman S, Rockefeller Grimes P, Macdonald C, Manglik A &
-Coyote-Maestas W (2026).
-[Read the paper](https://matthewkhoward.com/Howard_2026_GPR161_constitutive_activity.pdf) (PDF).
+Howard MK, Whiteman S, Rockefeller Grimes P, Macdonald CB, Manglik A &
+Coyote-Maestas W. *bioRxiv* 2026.10.30.762644 (2026).
+doi:[10.64898/2026.10.30.762644](https://doi.org/10.64898/2026.10.30.762644) ·
+[PDF](https://matthewkhoward.com/Howard_2026_GPR161_constitutive_activity.pdf)
 
 Code, processed data and figures for the basal cAMP GPCRome screen in that paper — a
 pooled measurement of **ligand-independent (basal) Gs/cAMP signalling across 946 barcoded
@@ -105,6 +106,17 @@ unambiguous. See [`docs/SEQUENCING_QC.md`](docs/SEQUENCING_QC.md).
 ---
 
 ## Citing this repository
+
+**For the work itself, cite the paper:**
+
+> Howard, M. K., Whiteman, S., Rockefeller Grimes, P., Macdonald, C. B.,
+> Manglik, A. & Coyote-Maestas, W. Mapping the sequence determinants of
+> constitutive activity in GPCRs. *bioRxiv* 2026.10.30.762644 (2026).
+> doi:[10.64898/2026.10.30.762644](https://doi.org/10.64898/2026.10.30.762644)
+
+The DOIs below cite this archive — the counts, the scores and the code that builds the
+figures from them. Cite them in addition to the paper if you reuse the repository, not
+instead of it.
 
 `CITATION.cff` carries the citation metadata; GitHub renders it as a **Cite this
 repository** button. `.zenodo.json` supplies the metadata Zenodo uses when it archives a

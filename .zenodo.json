@@ -24,6 +24,11 @@
   ],
   "related_identifiers": [
     {
+      "identifier": "10.64898/2026.10.30.762644",
+      "relation": "isSupplementTo",
+      "resource_type": "publication-preprint"
+    },
+    {
       "identifier": "https://github.com/matthewkarlhoward/2026_GPCRome_basal_cAMP",
       "relation": "isSupplementTo",
       "resource_type": "software"
